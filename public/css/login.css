@@ -1,0 +1,340 @@
+:root {
+    --bg-top:#e8f4ff;
+    --bg-mid:#cde8ff;
+    --bg-bot:#a8d8f8;
+    --card:#ffffff;
+    --border:#c2dff5;
+    --accent:#1565c0;
+    --accent2:#0288d1;
+    --sky:#29b6f6;
+    --text:#0d2b4e;
+    --subtext:#3a6186;
+    --muted:#7ea8c9;
+    --input-bg:#f5f9fc;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'DM Sans',sans-serif;
+    background:linear-gradient(180deg,var(--bg-top),var(--bg-mid),var(--bg-bot));
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    overflow:hidden;
+}
+
+/* Container */
+.login-container{
+    width:100%;
+    max-width:980px;
+    background:rgba(255,255,255,.95);
+    border-radius:28px;
+    overflow:hidden;
+    box-shadow:0 24px 72px rgba(13,43,78,.20);
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+
+/* LEFT */
+.login-left{
+    background:linear-gradient(135deg,#e3f2fd,#bbdefb);
+    padding:60px 50px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
+
+/* PHONE */
+.phone-mockup{
+    width:180px;
+    background:#1e3a5f;
+    border-radius:24px;
+    padding:12px;
+    box-shadow:0 16px 48px rgba(0,0,0,.25);
+    margin-bottom:30px;
+}
+
+.phone-screen{
+    background:linear-gradient(180deg,#2196f3,#1976d2);
+    border-radius:16px;
+    padding:30px 16px 20px;
+    text-align:center;
+}
+
+.phone-logo{
+    font-family:'Syne',sans-serif;
+    font-weight:700;
+    font-size:18px;
+    letter-spacing:.5px;
+    color:white;
+    margin-bottom:6px;
+}
+
+.phone-subtitle{
+    font-size:10px;
+    line-height:1.4;
+    color:rgba(255,255,255,.85);
+    margin-bottom:12px;
+}
+
+.phone-btn{
+    background:white;
+    color:var(--accent);
+    font-weight:700;
+    font-size:13px;
+    padding:8px 28px;
+    border-radius:8px;
+    border:none;
+    margin-top:12px;
+}
+
+/* RIGHT */
+.login-right{
+    padding:60px 50px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.login-title{
+    font-family:'Syne',sans-serif;
+    font-weight:800;
+    font-size:28px;
+    color:var(--accent);
+    text-align:center;
+}
+
+.login-title span{color:var(--sky);}
+
+.login-subtitle{
+    font-size:13px;
+    text-align:center;
+    color:var(--subtext);
+}
+
+.login-divider{
+    height:1px;
+    background:linear-gradient(90deg,transparent,rgba(2,136,209,.20),transparent);
+    margin:24px 0;
+}
+
+.form-group{margin-bottom:18px;}
+
+.form-label{
+    font-size:13px;
+    font-weight:600;
+    color:var(--text);
+    margin-bottom:6px;
+}
+
+.form-control{
+    width:100%;
+    padding:12px 16px;
+    font-size:14px;
+    background:var(--input-bg);
+    border:1.5px solid var(--border);
+    border-radius:10px;
+}
+
+.btn-submit{
+    width:100%;
+    padding:14px;
+    background:linear-gradient(135deg,var(--accent),var(--accent2));
+    color:white;
+    font-weight:700;
+    border:none;
+    border-radius:10px;
+}
+
+/* ═══════════════════════════════
+   BACKGROUND ANIMATION (SUN & CLOUD)
+   Tambahkan saja — jangan ubah struktur lain
+═══════════════════════════════ */
+
+/* Matahari */
+.sun{
+    position:fixed;
+    top:-60px;
+    right:80px;
+    width:180px;
+    height:180px;
+    background:radial-gradient(circle,#fff9c4 0%,#ffe082 50%,transparent 70%);
+    border-radius:50%;
+    opacity:.7;
+    pointer-events:none;
+    animation:sunPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes sunPulse{
+    from{transform:scale(1);opacity:.65;}
+    to{transform:scale(1.1);opacity:.8;}
+}
+
+/* Awan */
+.cloud{
+    position:fixed;
+    pointer-events:none;
+    opacity:.85;
+}
+
+.cloud-shape{
+    background:white;
+    border-radius:50px;
+    position:relative;
+}
+
+.cloud-shape::before,
+.cloud-shape::after{
+    content:'';
+    background:white;
+    border-radius:50%;
+    position:absolute;
+}
+
+/* Cloud 1 */
+.cloud-1{
+    top:60px;
+    left:-20px;
+    animation:cloudDrift1 28s linear infinite;
+}
+.cloud-1 .cloud-shape{
+    width:130px;height:40px;
+}
+.cloud-1 .cloud-shape::before{
+    width:65px;height:65px;
+    top:-35px;left:18px;
+}
+.cloud-1 .cloud-shape::after{
+    width:50px;height:50px;
+    top:-25px;left:60px;
+}
+
+/* Cloud 2 */
+.cloud-2{
+    top:110px;
+    left:40%;
+    animation:cloudDrift2 36s linear infinite;
+    animation-delay:-12s;
+}
+.cloud-2 .cloud-shape{
+    width:100px;height:32px;
+}
+.cloud-2 .cloud-shape::before{
+    width:52px;height:52px;
+    top:-28px;left:12px;
+}
+.cloud-2 .cloud-shape::after{
+    width:40px;height:40px;
+    top:-20px;left:48px;
+}
+
+/* Cloud 3 */
+.cloud-3{
+    top:30px;
+    right:220px;
+    animation:cloudDrift3 32s linear infinite;
+    animation-delay:-6s;
+}
+.cloud-3 .cloud-shape{
+    width:110px;height:34px;
+}
+.cloud-3 .cloud-shape::before{
+    width:55px;height:55px;
+    top:-30px;left:14px;
+}
+.cloud-3 .cloud-shape::after{
+    width:42px;height:42px;
+    top:-22px;left:52px;
+}
+
+/* Animasi gerak awan */
+@keyframes cloudDrift1{
+    from{transform:translateX(-160px);}
+    to{transform:translateX(110vw);}
+}
+@keyframes cloudDrift2{
+    from{transform:translateX(-140px);}
+    to{transform:translateX(110vw);}
+}
+@keyframes cloudDrift3{
+    from{transform:translateX(110vw);}
+    to{transform:translateX(-200px);}
+}
+
+/* Tombol Keluar */
+.back-link{
+    text-align:center;
+    margin-top:18px;
+}
+
+.back-link a{
+    font-size:13px;
+    font-weight:600;
+    color:var(--subtext);
+    text-decoration:none;
+    transition:.3s ease;
+}
+
+.back-link a:hover{
+    color:var(--accent);
+    text-decoration:underline;
+}
+
+/* Tombol Keluar */
+.back-link{
+    text-align:center;
+    margin-top:18px;
+}
+
+.back-link a{
+    font-size:13px;
+    font-weight:600;
+    color:var(--subtext);
+    text-decoration:none;
+    transition:.3s ease;
+}
+
+.back-link a:hover{
+    color:var(--accent);
+    text-decoration:underline;
+}
+
+/* Notch / Poni HP */
+.phone-mockup{
+    position:relative;
+    overflow:hidden;
+}
+
+/* Poni */
+.phone-mockup::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:90px;
+    height:26px;
+    background:#0f2744;
+    border-bottom-left-radius:14px;
+    border-bottom-right-radius:14px;
+    z-index:10;
+}
+
+/* Kamera kecil di dalam poni */
+.phone-mockup::after{
+    content:"";
+    position:absolute;
+    top:10px;
+    left:50%;
+    transform:translateX(-50%);
+    width:8px;
+    height:8px;
+    background:#1c3d63;
+    border-radius:50%;
+    z-index:11;
+}
+
