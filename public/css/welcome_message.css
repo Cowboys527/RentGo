@@ -1,0 +1,564 @@
+/* ═══════════════════════════════════════
+   welcome.css — RentGo Welcome Page
+   Letakkan di: public/assets/css/welcome.css
+═══════════════════════════════════════ */
+
+:root {
+    --bg-top:   #e8f4ff;
+    --bg-mid:   #cde8ff;
+    --bg-bot:   #a8d8f8;
+    --card:     #ffffff;
+    --border:   #c2dff5;
+    --accent:   #1565c0;
+    --accent2:  #0288d1;
+    --sky:      #29b6f6;
+    --text:     #0d2b4e;
+    --subtext:  #3a6186;
+    --muted:    #7ea8c9;
+    --white:    #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 55%, var(--bg-bot) 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    color: var(--text);
+}
+
+/* ════════════════════════════
+   SUN
+════════════════════════════ */
+.sun {
+    position: fixed;
+    top: -60px;
+    right: 80px;
+    width: 180px;
+    height: 180px;
+    background: radial-gradient(circle, #fff9c4 0%, #ffe082 50%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.7;
+    pointer-events: none;
+    animation: sunPulse 6s ease-in-out infinite alternate;
+}
+
+@keyframes sunPulse {
+    from { transform: scale(1);   opacity: 0.65; }
+    to   { transform: scale(1.1); opacity: 0.80; }
+}
+
+/* ════════════════════════════
+   CLOUDS
+════════════════════════════ */
+.cloud {
+    position: fixed;
+    pointer-events: none;
+    opacity: 0.85;
+}
+
+.cloud-shape {
+    background: white;
+    border-radius: 50px;
+    position: relative;
+}
+
+.cloud-shape::before,
+.cloud-shape::after {
+    content: '';
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.cloud-1 { top: 60px;  left: -20px; animation: cloudDrift1 28s linear infinite; }
+.cloud-2 { top: 110px; left: 40%;   animation: cloudDrift2 36s linear infinite; animation-delay: -12s; }
+.cloud-3 { top: 30px;  right: 220px; animation: cloudDrift3 32s linear infinite; animation-delay: -6s; }
+
+.cloud-1 .cloud-shape { width: 130px; height: 40px; }
+.cloud-1 .cloud-shape::before { width: 65px; height: 65px; top: -35px; left: 18px; }
+.cloud-1 .cloud-shape::after  { width: 50px; height: 50px; top: -25px; left: 60px; }
+
+.cloud-2 .cloud-shape { width: 100px; height: 32px; }
+.cloud-2 .cloud-shape::before { width: 52px; height: 52px; top: -28px; left: 12px; }
+.cloud-2 .cloud-shape::after  { width: 40px; height: 40px; top: -20px; left: 48px; }
+
+.cloud-3 .cloud-shape { width: 110px; height: 34px; }
+.cloud-3 .cloud-shape::before { width: 55px; height: 55px; top: -30px; left: 14px; }
+.cloud-3 .cloud-shape::after  { width: 42px; height: 42px; top: -22px; left: 52px; }
+
+@keyframes cloudDrift1 { from { transform: translateX(-160px); } to { transform: translateX(110vw); } }
+@keyframes cloudDrift2 { from { transform: translateX(-140px); } to { transform: translateX(110vw); } }
+@keyframes cloudDrift3 { from { transform: translateX(110vw);  } to { transform: translateX(-200px); } }
+
+/* ════════════════════════════
+   ROAD SCENE
+════════════════════════════ */
+.road-scene {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 140px;
+    pointer-events: none;
+}
+
+.road-surface {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(180deg, #607d8b 0%, #546e7a 100%);
+    border-top: 4px solid #78909c;
+}
+
+.road-dashes {
+    position: absolute;
+    bottom: 32px; left: 0; right: 0;
+    height: 6px;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent 0px, transparent 30px,
+        #ffffff55 30px, #ffffff55 60px
+    );
+    animation: dashMove 0.6s linear infinite;
+}
+
+@keyframes dashMove {
+    from { background-position: 0 0; }
+    to   { background-position: -60px 0; }
+}
+
+.sidewalk {
+    position: absolute;
+    bottom: 76px; left: 0; right: 0;
+    height: 18px;
+    background: linear-gradient(180deg, #eceff1 0%, #cfd8dc 100%);
+    border-top: 2px solid #b0bec5;
+}
+
+.grass {
+    position: absolute;
+    bottom: 94px; left: 0; right: 0;
+    height: 20px;
+    background: linear-gradient(180deg, #81c784 0%, #66bb6a 100%);
+}
+
+/* ════════════════════════════
+   TREES
+════════════════════════════ */
+.trees {
+    position: fixed;
+    bottom: 92px; left: 0; right: 0;
+    pointer-events: none;
+}
+
+.tree {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tree-top {
+    width: 0; height: 0;
+    border-left: solid transparent;
+    border-right: solid transparent;
+    border-bottom: solid #43a047;
+}
+
+.tree-trunk {
+    background: #5d4037;
+}
+
+/* ════════════════════════════
+   ANIMATED CAR
+════════════════════════════ */
+.car-wrapper {
+    position: fixed;
+    bottom: 84px;
+    left: -220px;
+    animation: carDrive 12s linear infinite;
+    z-index: 10;
+}
+
+@keyframes carDrive {
+    0%   { left: -220px; }
+    100% { left: 110vw; }
+}
+
+.car {
+    position: relative;
+    width: 200px;
+    height: 90px;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+}
+
+.car-body {
+    position: absolute;
+    bottom: 18px;
+    left: 10px; right: 10px;
+    height: 44px;
+    background: linear-gradient(135deg, #1976d2 0%, #2196f3 40%, #42a5f5 100%);
+    border-radius: 6px 6px 4px 4px;
+}
+
+.car-roof {
+    position: absolute;
+    bottom: 54px;
+    left: 38px;
+    width: 110px;
+    height: 40px;
+    background: linear-gradient(135deg, #1565c0 0%, #1976d2 60%, #2196f3 100%);
+    border-radius: 16px 16px 0 0;
+}
+
+.car-window-front {
+    position: absolute;
+    bottom: 56px; left: 105px;
+    width: 38px; height: 30px;
+    background: linear-gradient(135deg, #b3e5fc, #e3f2fd);
+    border-radius: 4px 12px 0 0;
+    border: 2px solid rgba(255,255,255,0.4);
+}
+
+.car-window-rear {
+    position: absolute;
+    bottom: 56px; left: 58px;
+    width: 42px; height: 28px;
+    background: linear-gradient(135deg, #b3e5fc, #e3f2fd);
+    border-radius: 10px 4px 0 0;
+    border: 2px solid rgba(255,255,255,0.4);
+}
+
+.car-door-line {
+    position: absolute;
+    bottom: 25px; left: 90px;
+    width: 1px; height: 32px;
+    background: rgba(255,255,255,0.3);
+}
+
+.car-headlight {
+    position: absolute;
+    bottom: 28px; right: 11px;
+    width: 14px; height: 10px;
+    background: #fff9c4;
+    border-radius: 2px;
+    box-shadow: 0 0 10px 3px rgba(255,248,160,0.6);
+}
+
+.car-taillight {
+    position: absolute;
+    bottom: 28px; left: 11px;
+    width: 12px; height: 8px;
+    background: #ef9a9a;
+    border-radius: 2px;
+}
+
+.car-bumper-f {
+    position: absolute;
+    bottom: 20px; right: 6px;
+    width: 14px; height: 18px;
+    background: #1565c0;
+    border-radius: 0 4px 4px 0;
+}
+
+.car-bumper-r {
+    position: absolute;
+    bottom: 20px; left: 6px;
+    width: 14px; height: 18px;
+    background: #1565c0;
+    border-radius: 4px 0 0 4px;
+}
+
+.wheel {
+    position: absolute;
+    bottom: 4px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: #212121;
+    border: 5px solid #424242;
+    animation: wheelSpin 0.4s linear infinite;
+}
+
+.wheel::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: radial-gradient(circle, #9e9e9e, #757575);
+    border-radius: 50%;
+}
+
+.wheel-front { right: 18px; }
+.wheel-rear  { left: 18px; }
+
+@keyframes wheelSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+.exhaust {
+    position: absolute;
+    bottom: 22px; left: -6px;
+}
+
+.puff {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.6);
+    animation: puffAnim 0.8s ease-out infinite;
+}
+
+.puff:nth-child(1) { width: 10px; height: 10px; left: -4px;  animation-delay: 0s; }
+.puff:nth-child(2) { width: 14px; height: 14px; left: -16px; animation-delay: 0.25s; }
+.puff:nth-child(3) { width: 8px;  height: 8px;  left: -26px; animation-delay: 0.5s; }
+
+@keyframes puffAnim {
+    0%   { opacity: 0.7; transform: scale(1) translateY(0); }
+    100% { opacity: 0;   transform: scale(2.2) translateY(-12px); }
+}
+
+.car-label {
+    position: absolute;
+    bottom: 38px; left: 55px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    color: white;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* ════════════════════════════
+   WELCOME CARD
+════════════════════════════ */
+.welcome-card {
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid rgba(41,182,246,0.25);
+    border-radius: 28px;
+    padding: 48px 44px 32px;
+    width: 100%;
+    max-width: 460px;
+    position: relative;
+    z-index: 20;
+    overflow: hidden;
+    box-shadow:
+        0 2px 0 rgba(255,255,255,0.9) inset,
+        0 20px 60px rgba(13,43,78,0.18),
+        0 4px 16px rgba(13,43,78,0.1);
+    animation: slideUp 0.7s cubic-bezier(.23,1,.32,1) both;
+    margin-bottom: 160px;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(36px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.card-accent-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--sky));
+    border-radius: 28px 28px 0 0;
+}
+
+.welcome-card::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 260px; height: 160px;
+    background: radial-gradient(ellipse, rgba(41,182,246,0.10), transparent 70%);
+    pointer-events: none;
+}
+
+/* ── Logo ── */
+.logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 10px;
+    animation: fadeUp 0.5s 0.15s both;
+}
+
+.logo-icon-box {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, var(--accent), var(--sky));
+    border-radius: 15px;
+    display: grid;
+    place-items: center;
+    font-size: 26px;
+    box-shadow: 0 8px 20px rgba(21,101,192,0.35);
+}
+
+.logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 34px;
+    letter-spacing: -1px;
+    line-height: 1;
+    color: var(--accent);
+}
+
+.logo-text span { color: var(--sky); }
+
+/* ── Badge ── */
+.system-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(2,136,209,0.10);
+    border: 1px solid rgba(2,136,209,0.22);
+    color: var(--accent2);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    animation: fadeUp 0.5s 0.20s both;
+}
+
+.badge-dot {
+    width: 7px; height: 7px;
+    background: var(--sky);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--sky);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* ── Divider ── */
+.card-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(2,136,209,0.20), transparent);
+    margin: 22px 0;
+}
+
+/* ── Welcome Text ── */
+.welcome-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--text);
+    margin-bottom: 10px;
+    animation: fadeUp 0.5s 0.30s both;
+}
+
+.welcome-desc {
+    font-size: 14px;
+    color: var(--subtext);
+    line-height: 1.7;
+    animation: fadeUp 0.5s 0.35s both;
+}
+
+/* ── Button ── */
+.btn-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s;
+    box-shadow: 0 8px 24px rgba(21,101,192,0.35);
+    animation: fadeUp 0.5s 0.45s both;
+    position: relative;
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+.btn-login::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(21,101,192,0.50);
+    color: white;
+    background: linear-gradient(135deg, var(--accent2), var(--sky));
+}
+
+.btn-login:hover::before { left: 100%; }
+.btn-login:active         { transform: translateY(0); }
+
+.btn-arrow { transition: transform 0.2s; }
+.btn-login:hover .btn-arrow { transform: translateX(5px); }
+
+/* ── Footer ── */
+.card-footer-text {
+    margin-top: 18px;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    animation: fadeUp 0.5s 0.50s both;
+}
+
+.card-footer-text a {
+    color: var(--subtext);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.card-footer-text a:hover { color: var(--accent2); }
+
+/* ── Brand Strip (inside card) ── */
+.brand-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(2,136,209,0.12);
+    font-size: 11px;
+    color: var(--muted);
+    animation: fadeUp 0.5s 0.55s both;
+}
+
+.brand-dot {
+    width: 4px; height: 4px;
+    background: var(--muted);
+    border-radius: 50%;
+}
+
+/* ════════════════════════════
+   ANIMATIONS
+════════════════════════════ */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
