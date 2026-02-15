@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard Admin</title>
-</head>
-<body>
+<?= $this->extend('layouts/admin_template') ?>
 
-<h1>Selamat Datang di Dashboard Admin</h1>
+<?= $this->section('content') ?>
 
-<p>Login berhasil!</p>
+<h1>Dashboard Admin</h1>
+<p>Selamat datang di sistem Rental Kendaraan</p>
 
-<a href="/logout">Logout</a>
-
-</body>
-</html>
+<?= $this->endSection() ?>
