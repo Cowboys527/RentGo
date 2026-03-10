@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Admin Panel - RentGo</title>
-    <link rel="stylesheet" href="/css/admin_sidebar.css">
+    <link rel="stylesheet" href="<?= base_url('css/admin_sidebar.css') ?>">
+    <link rel="preload" as="image" href="<?= base_url('img/logo.png') ?>">
 
     <!-- ICON (Material Icons) -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -16,8 +17,7 @@
     <div class="sidebar">
 
         <div class="logo">
-            <img src="/img/logo.png" alt="RentGo" class="logo-img">
-            <h3>RentGo</h3>
+             <img src="<?= base_url('img/logo.png') ?>" alt="RentGo">
         </div>
 
         <ul class="menu">
@@ -39,13 +39,6 @@
                 <a href="/admin/user">
                     <span class="material-icons">people</span>
                     Data User
-                </a>
-            </li>
-
-            <li>
-                <a href="/admin/transaksi">
-                    <span class="material-icons">receipt_long</span>
-                    Lihat Transaksi
                 </a>
             </li>
         </ul>

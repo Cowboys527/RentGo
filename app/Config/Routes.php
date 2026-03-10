@@ -33,9 +33,6 @@ $routes->get('user/edit/(:num)', 'User::edit/$1');
 $routes->post('user/update/(:num)', 'User::update/$1');
 $routes->get('user/hapus/(:num)', 'User::hapus/$1');
 
-// Transaksi
-$routes->get('transaksi', 'Transaksi::index');
-
 });
 
 
