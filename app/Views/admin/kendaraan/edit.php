@@ -2,43 +2,42 @@
 <?= $this->section('content') ?>
 
 <div style="margin-left:220px; padding:20px;">
-    <h2>Edit Kendaraan</h2>
+<h2>Edit Kendaraan</h2>
 
-    <form action="/admin/kendaraan/update/<?= $kendaraan['id_kendaraan']; ?>" method="post">
+<?php if (session()->getFlashdata('errors')): ?>
+    <div style="color:red;">
+        <?php foreach (session()->getFlashdata('errors') as $e): ?>
+            <p><?= $e ?></p>
+        <?php endforeach ?>
+    </div>
+<?php endif; ?>
 
-        <label>Nama Kendaraan</label><br>
-        <input type="text" name="nama_kendaraan"
-               value="<?= $kendaraan['nama_kendaraan']; ?>" required><br><br>
+<form action="/admin/kendaraan/update/<?= $kendaraan['id_kendaraan'] ?>" method="post">
 
-        <label>Jenis</label><br>
-        <input type="text" name="jenis"
-               value="<?= $kendaraan['jenis']; ?>" required><br><br>
+Nama Kendaraan:<br>
+<input type="text" name="nama_kendaraan"
+       value="<?= old('nama_kendaraan', $kendaraan['nama_kendaraan']) ?>"><br><br>
 
-        <label>Plat Nomor</label><br>
-        <input type="text" name="plat_nomor"
-               value="<?= $kendaraan['plat_nomor']; ?>" required><br><br>
+Jenis:<br>
+<input type="text" name="jenis"
+       value="<?= old('jenis', $kendaraan['jenis']) ?>"><br><br>
 
-        <label>Harga Sewa</label><br>
-        <input type="number" name="harga_sewa"
-               value="<?= $kendaraan['harga_sewa']; ?>" required><br><br>
+Plat Nomor:<br>
+<input type="text" name="plat_nomor"
+       value="<?= old('plat_nomor', $kendaraan['plat_nomor']) ?>"><br><br>
 
-        <label>Status</label><br>
-        <select name="status">
-            <option value="Tersedia"
-                <?= $kendaraan['status'] == 'Tersedia' ? 'selected' : '' ?>>
-                Tersedia
-            </option>
+Harga Sewa:<br>
+<input type="number" name="harga_sewa"
+       value="<?= old('harga_sewa', $kendaraan['harga_sewa']) ?>"><br><br>
 
-            <option value="Disewa"
-                <?= $kendaraan['status'] == 'Disewa' ? 'selected' : '' ?>>
-                Disewa
-            </option>
-        </select><br><br>
+Status:<br>
+<input type="text" value="<?= $kendaraan['status'] ?>" readonly><br>
+<small>Status diatur otomatis oleh sistem transaksi</small><br><br>
 
-        <button type="submit">Update</button>
-        <a href="/admin/kendaraan">Kembali</a>
+<button type="submit">Update</button>
+<a href="/admin/kendaraan">Kembali</a>
 
-    </form>
+</form>
 </div>
 
 <?= $this->endSection() ?>
