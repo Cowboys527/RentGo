@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controllers;
-
 use App\Models\UserModel;
 
 class User extends BaseController
@@ -9,7 +8,25 @@ class User extends BaseController
     public function index()
     {
         $model = new UserModel();
-        $data['user'] = $model->findAll();
+
+        $keyword = $this->request->getGet('keyword');
+        $role    = $this->request->getGet('role');
+
+        if ($keyword) {
+            $model->groupStart()
+                  ->like('username', $keyword)
+                  ->orLike('nama', $keyword)
+                  ->groupEnd();
+        }
+
+        if ($role) {
+            $model->where('role', $role);
+        }
+
+        $data['user']   = $model->paginate(5);
+        $data['pager']  = $model->pager;
+        $data['keyword']= $keyword;
+        $data['role']   = $role;
 
         return view('admin/user/index', $data);
     }
@@ -21,38 +38,73 @@ class User extends BaseController
 
     public function simpan()
     {
-        $model = new UserModel();
+        if (!$this->validate([
+            'username' => 'required|is_unique[users.username]',
+            'password' => 'required|min_length[6]',
+            'nama'     => 'required',
+            'role'     => 'required',
+            'status'   => 'required'
+        ])) {
+            return redirect()->back()
+                ->withInput()
+                ->with('errors', $this->validator->getErrors());
+        }
 
+        $model = new UserModel();
         $model->save([
             'username' => $this->request->getPost('username'),
-            'password' => $this->request->getPost('password'),
-            'nama' => $this->request->getPost('nama'),
-            'role' => $this->request->getPost('role'),
+            'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
+            'nama'     => $this->request->getPost('nama'),
+            'role'     => $this->request->getPost('role'),
+            'status'   => $this->request->getPost('status'),
         ]);
 
-        return redirect()->to('/admin/user');
+        return redirect()->to('/admin/user')
+            ->with('success', 'User berhasil ditambahkan');
     }
 
     public function edit($id)
     {
         $model = new UserModel();
         $data['user'] = $model->find($id);
-
         return view('admin/user/edit', $data);
     }
 
     public function update($id)
     {
-        $model = new UserModel();
+        $rules = [
+            'username' => "required|is_unique[users.username,id_user,$id]",
+            'nama'     => 'required',
+            'role'     => 'required',
+            'status'   => 'required'
+        ];
 
-        $model->update($id, [
+        if (!$this->validate($rules)) {
+            return redirect()->back()
+                ->withInput()
+                ->with('errors', $this->validator->getErrors());
+        }
+
+        $dataUpdate = [
             'username' => $this->request->getPost('username'),
-            'password' => $this->request->getPost('password'),
-            'nama' => $this->request->getPost('nama'),
-            'role' => $this->request->getPost('role'),
-        ]);
+            'nama'     => $this->request->getPost('nama'),
+            'role'     => $this->request->getPost('role'),
+            'status'   => $this->request->getPost('status'),
+        ];
 
-        return redirect()->to('/admin/user');
+        // Jika password diisi, update password
+        if ($this->request->getPost('password')) {
+            $dataUpdate['password'] = password_hash(
+                $this->request->getPost('password'),
+                PASSWORD_DEFAULT
+            );
+        }
+
+        $model = new UserModel();
+        $model->update($id, $dataUpdate);
+
+        return redirect()->to('/admin/user')
+            ->with('success', 'User berhasil diupdate');
     }
 
     public function hapus($id)
@@ -60,6 +112,7 @@ class User extends BaseController
         $model = new UserModel();
         $model->delete($id);
 
-        return redirect()->to('/admin/user');
+        return redirect()->to('/admin/user')
+            ->with('success', 'User berhasil dihapus');
     }
 }
