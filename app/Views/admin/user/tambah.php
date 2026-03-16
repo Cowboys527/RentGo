@@ -1,44 +1,66 @@
 <?= $this->extend('layouts/admin_sidebar') ?>
 <?= $this->section('content') ?>
 
-<div style="margin-left:220px; padding:20px;">
-<h2>Tambah User</h2>
+<link rel="stylesheet" href="<?= base_url('css/user/tambah.css') ?>">
+
+<div class="form-container">
+
+<div class="page-header">
+    <h2 class="page-title">Tambah User</h2>
+    <p class="page-subtitle">Tambahkan pengguna baru ke sistem</p>
+</div>
 
 <?php if(session()->getFlashdata('errors')): ?>
-<div style="color:red;">
-<?php foreach(session()->getFlashdata('errors') as $e): ?>
-<p><?= $e ?></p>
-<?php endforeach ?>
-</div>
+    <div class="alert-error">
+        <?php foreach(session()->getFlashdata('errors') as $e): ?>
+            <p><?= $e ?></p>
+        <?php endforeach ?>
+    </div>
 <?php endif; ?>
 
-<form action="/admin/user/simpan" method="post">
+<div class="form-card">
+    <form action="/admin/user/simpan" method="post" class="user-form">
 
-Username:<br>
-<input type="text" name="username" value="<?= old('username') ?>"><br><br>
+        <div class="form-group">
+            <label class="form-label">Username:</label>
+            <input type="text" name="username" class="form-input" value="<?= old('username') ?>">
+        </div>
 
-Password:<br>
-<input type="password" name="password"><br><br>
+        <div class="form-group">
+            <label class="form-label">Password:</label>
+            <input type="password" name="password" class="form-input">
+        </div>
 
-Nama:<br>
-<input type="text" name="nama" value="<?= old('nama') ?>"><br><br>
+        <div class="form-group">
+            <label class="form-label">Nama:</label>
+            <input type="text" name="nama" class="form-input" value="<?= old('nama') ?>">
+        </div>
 
-Role:<br>
-<select name="role">
-    <option value="admin">Admin</option>
-    <option value="kasir">Kasir</option>
-    <option value="owner">Owner</option>
-</select><br><br>
+        <div class="form-group">
+            <label class="form-label">Role:</label>
+            <select name="role" class="form-select">
+                <option value="admin">Admin</option>
+                <option value="kasir">Kasir</option>
+                <option value="owner">Owner</option>
+            </select>
+        </div>
 
-Status:<br>
-<select name="status">
-    <option value="aktif">Aktif</option>
-    <option value="nonaktif">Nonaktif</option>
-</select><br><br>
+        <div class="form-group">
+            <label class="form-label">Status:</label>
+            <select name="status" class="form-select">
+                <option value="aktif">Aktif</option>
+                <option value="nonaktif">Nonaktif</option>
+            </select>
+        </div>
 
-<button type="submit">Simpan</button>
-<a href="/admin/user">Kembali</a>
-</form>
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Simpan</button>
+            <a href="/admin/user" class="btn-cancel">Kembali</a>
+        </div>
+
+    </form>
+</div>
+
 </div>
 
 <?= $this->endSection() ?>

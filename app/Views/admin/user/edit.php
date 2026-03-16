@@ -1,46 +1,68 @@
 <?= $this->extend('layouts/admin_sidebar') ?>
 <?= $this->section('content') ?>
 
-<div style="margin-left:220px; padding:20px;">
-<h2>Edit User</h2>
+<link rel="stylesheet" href="<?= base_url('css/user/edit.css') ?>">
+
+<div class="form-container">
+
+<div class="page-header">
+    <h2 class="page-title">Edit User</h2>
+    <p class="page-subtitle">Perbarui data pengguna</p>
+</div>
 
 <?php if(session()->getFlashdata('errors')): ?>
-<div style="color:red;">
-<?php foreach(session()->getFlashdata('errors') as $e): ?>
-<p><?= $e ?></p>
-<?php endforeach ?>
-</div>
+    <div class="alert-error">
+        <?php foreach(session()->getFlashdata('errors') as $e): ?>
+            <p><?= $e ?></p>
+        <?php endforeach ?>
+    </div>
 <?php endif; ?>
 
-<form action="/admin/user/update/<?= $user['id_user'] ?>" method="post">
+<div class="form-card">
+    <form action="/admin/user/update/<?= $user['id_user'] ?>" method="post" class="user-form">
 
-Username:<br>
-<input type="text" name="username"
-       value="<?= old('username',$user['username']) ?>"><br><br>
+        <div class="form-group">
+            <label class="form-label">Username:</label>
+            <input type="text" name="username" class="form-input"
+                   value="<?= old('username',$user['username']) ?>">
+        </div>
 
-Password (kosongkan jika tidak diubah):<br>
-<input type="password" name="password"><br><br>
+        <div class="form-group">
+            <label class="form-label">Password (kosongkan jika tidak diubah):</label>
+            <input type="password" name="password" class="form-input">
+        </div>
 
-Nama:<br>
-<input type="text" name="nama"
-       value="<?= old('nama',$user['nama']) ?>"><br><br>
+        <div class="form-group">
+            <label class="form-label">Nama:</label>
+            <input type="text" name="nama" class="form-input"
+                   value="<?= old('nama',$user['nama']) ?>">
+        </div>
 
-Role:<br>
-<select name="role">
-<option value="admin" <?= $user['role']=='admin'?'selected':'' ?>>Admin</option>
-<option value="kasir" <?= $user['role']=='kasir'?'selected':'' ?>>Kasir</option>
-<option value="owner" <?= $user['role']=='owner'?'selected':'' ?>>Owner</option>
-</select><br><br>
+        <div class="form-group">
+            <label class="form-label">Role:</label>
+            <select name="role" class="form-select">
+                <option value="admin" <?= $user['role']=='admin'?'selected':'' ?>>Admin</option>
+                <option value="kasir" <?= $user['role']=='kasir'?'selected':'' ?>>Kasir</option>
+                <option value="owner" <?= $user['role']=='owner'?'selected':'' ?>>Owner</option>
+            </select>
+        </div>
 
-Status:<br>
-<select name="status">
-<option value="aktif" <?= $user['status']=='aktif'?'selected':'' ?>>Aktif</option>
-<option value="nonaktif" <?= $user['status']=='nonaktif'?'selected':'' ?>>Nonaktif</option>
-</select><br><br>
+        <div class="form-group">
+            <label class="form-label">Status:</label>
+            <select name="status" class="form-select">
+                <option value="aktif" <?= $user['status']=='aktif'?'selected':'' ?>>Aktif</option>
+                <option value="nonaktif" <?= $user['status']=='nonaktif'?'selected':'' ?>>Nonaktif</option>
+            </select>
+        </div>
 
-<button type="submit">Update</button>
-<a href="/admin/user">Batal</a>
-</form>
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Update</button>
+            <a href="/admin/user" class="btn-cancel">Batal</a>
+        </div>
+
+    </form>
+</div>
+
 </div>
 
 <?= $this->endSection() ?>

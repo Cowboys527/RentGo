@@ -1,0 +1,514 @@
+/* ═══════════════════════════════════════
+   data_kendaraan.css — Data Kendaraan
+   Letakkan di: public/css/data_kendaraan.css
+═══════════════════════════════════════ */
+
+/* ════════════════════════════
+   CONTAINER
+════════════════════════════ */
+.kendaraan-container {
+    padding: 28px 32px;
+}
+
+/* ════════════════════════════
+   PAGE HEADER
+════════════════════════════ */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.header-left {
+    flex: 1;
+}
+
+.page-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--text, #2c3e50);
+    margin: 0 0 6px 0;
+}
+
+.page-subtitle {
+    font-size: 14px;
+    color: var(--subtext, #5a6c7d);
+    margin: 0;
+}
+
+/* ════════════════════════════
+   BUTTON ADD
+════════════════════════════ */
+.btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #1565c0, #1976d2);
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.btn-add:hover {
+    background: #1565c0;
+}
+
+/* Icon Plus untuk Button Add */
+.btn-add::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* ════════════════════════════
+   ALERT SUCCESS
+════════════════════════════ */
+.alert-success {
+    background: rgba(0, 200, 83, 0.1);
+    border: 1px solid #00c853;
+    border-radius: 10px;
+    padding: 14px 18px 14px 50px;
+    margin-bottom: 20px;
+    color: #00c853;
+    font-weight: 600;
+    position: relative;
+}
+
+/* Icon Checkmark untuk Alert */
+.alert-success::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2300c853'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* ════════════════════════════
+   FILTER BAR
+════════════════════════════ */
+.filter-bar {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Search Form */
+.search-form {
+    flex: 1;
+    min-width: 300px;
+}
+
+.search-box {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px 16px 10px 40px;
+    border: 1.5px solid #dfe6ed;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 12px center;
+    background-size: 18px 18px;
+}
+
+.search-input:focus {
+    border-color: #1565c0;
+    box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.1);
+}
+
+.btn-search {
+    padding: 10px 20px;
+    background: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-search:hover {
+    background: #1565c0;
+}
+
+.btn-reset {
+    padding: 10px 16px;
+    background: white;
+    color: #5a6c7d;
+    border: 1.5px solid #dfe6ed;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-block;
+}
+
+.btn-reset:hover {
+    border-color: #1976d2;
+    color: #1976d2;
+}
+
+/* Filter Form */
+.filter-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-select {
+    padding: 10px 14px;
+    border: 1.5px solid #dfe6ed;
+    border-radius: 8px;
+    font-size: 14px;
+    background: white;
+    color: #2c3e50;
+    cursor: pointer;
+    outline: none;
+    min-width: 160px;
+}
+
+.filter-select:focus {
+    border-color: #1565c0;
+}
+
+.btn-filter {
+    padding: 10px 20px;
+    background: #ff9800;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-filter:hover {
+    background: #f57c00;
+}
+
+/* ════════════════════════════
+   TABLE CARD
+════════════════════════════ */
+.table-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 14px;
+    padding: 24px;
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table thead tr {
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.data-table th {
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #5a6c7d;
+}
+
+/* Center align untuk kolom Aksi */
+.data-table th:last-child {
+    text-align: center;
+}
+
+.data-table td {
+    padding: 16px;
+    font-size: 14px;
+    color: #2c3e50;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.data-table tbody tr {
+    transition: background 0.2s;
+}
+
+.data-table tbody tr:hover {
+    background: #f8fafb;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Table Styling */
+.table-no {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background: rgba(21, 101, 192, 0.08);
+    color: #1565c0;
+    font-weight: 700;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 32px;
+}
+
+.td-bold {
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.plat-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    background: rgba(21, 101, 192, 0.1);
+    color: #1565c0;
+    font-weight: 700;
+    font-size: 13px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+}
+
+.td-price {
+    font-weight: 700;
+    color: #00c853;
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.status-tersedia {
+    background: rgba(0, 200, 83, 0.12);
+    color: #00c853;
+}
+
+.status-disewa {
+    background: rgba(255, 152, 0, 0.12);
+    color: #ff9800;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px 7px 36px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Icon Edit (Pensil Abu-abu) */
+.btn-edit {
+    background: rgba(21, 101, 192, 0.08);
+    color: #1565c0;
+}
+
+.btn-edit::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.btn-edit:hover {
+    background: #1565c0;
+    color: white;
+}
+
+.btn-edit:hover::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'/%3E%3C/svg%3E");
+}
+
+/* Icon Delete (Tong Sampah Abu-abu) */
+.btn-delete {
+    background: rgba(231, 76, 60, 0.08);
+    color: #e74c3c;
+}
+
+.btn-delete::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.btn-delete:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-delete:hover::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3E%3C/svg%3E");
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #95a5a6;
+    font-size: 16px;
+    font-style: italic;
+}
+
+/* ════════════════════════════
+   PAGINATION
+════════════════════════════ */
+.pagination-wrapper {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Style default CI4 pagination */
+.pagination-wrapper ul {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination-wrapper li {
+    display: inline-block;
+}
+
+.pagination-wrapper a,
+.pagination-wrapper span {
+    display: inline-block;
+    padding: 10px 16px;
+    background: white;
+    border: 1.5px solid #dfe6ed;
+    border-radius: 8px;
+    color: #2c3e50;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.pagination-wrapper a:hover {
+    background: #1565c0;
+    color: white;
+    border-color: #1565c0;
+}
+
+.pagination-wrapper .active span {
+    background: #1565c0;
+    color: white;
+    border-color: #1565c0;
+}
+
+/* ════════════════════════════
+   RESPONSIVE
+════════════════════════════ */
+@media (max-width: 768px) {
+    .kendaraan-container {
+        padding: 20px 16px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-form {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .filter-form {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+
+    .table-card {
+        padding: 16px;
+        overflow-x: scroll;
+    }
+
+    .data-table {
+        min-width: 800px;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .btn-action {
+        width: 100%;
+        justify-content: center;
+    }
+}

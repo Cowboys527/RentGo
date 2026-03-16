@@ -1,39 +1,60 @@
 <?= $this->extend('layouts/admin_sidebar') ?>
 <?= $this->section('content') ?>
 
-<div style="margin-left:220px; padding:20px;">
-<h2>Tambah Kendaraan</h2>
+<link rel="stylesheet" href="<?= base_url('css/kendaraan/tambah.css') ?>">
+
+<div class="form-container">
+
+<div class="page-header">
+    <h2 class="page-title">Tambah Kendaraan</h2>
+    <p class="page-subtitle">Tambahkan data kendaraan baru</p>
+</div>
 
 <?php if (session()->getFlashdata('errors')): ?>
-    <div style="color:red;">
+    <div class="alert-error">
         <?php foreach (session()->getFlashdata('errors') as $e): ?>
             <p><?= $e ?></p>
         <?php endforeach ?>
     </div>
 <?php endif; ?>
 
-<form action="/admin/kendaraan/simpan" method="post">
+<div class="form-card">
+    <form action="/admin/kendaraan/simpan" method="post" class="kendaraan-form">
 
-Nama Kendaraan:<br>
-<input type="text" name="nama_kendaraan" value="<?= old('nama_kendaraan') ?>"><br><br>
+        <div class="form-group">
+            <label class="form-label">Nama Kendaraan:</label>
+            <input type="text" name="nama_kendaraan" class="form-input" value="<?= old('nama_kendaraan') ?>">
+        </div>
 
-Jenis:<br>
-<input type="text" name="jenis" value="<?= old('jenis') ?>"><br><br>
+        <div class="form-group">
+            <label class="form-label">Jenis:</label>
+            <input type="text" name="jenis" class="form-input" value="<?= old('jenis') ?>">
+        </div>
 
-Plat Nomor:<br>
-<input type="text" name="plat_nomor" value="<?= old('plat_nomor') ?>"><br><br>
+        <div class="form-group">
+            <label class="form-label">Plat Nomor:</label>
+            <input type="text" name="plat_nomor" class="form-input" value="<?= old('plat_nomor') ?>">
+        </div>
 
-Harga Sewa:<br>
-<input type="number" name="harga_sewa" value="<?= old('harga_sewa') ?>"><br><br>
+        <div class="form-group">
+            <label class="form-label">Harga Sewa:</label>
+            <input type="number" name="harga_sewa" class="form-input" value="<?= old('harga_sewa') ?>">
+        </div>
 
-Status:<br>
-<input type="text" value="Tersedia" readonly>
-<input type="hidden" name="status" value="Tersedia"><br><br>
+        <div class="form-group">
+            <label class="form-label">Status:</label>
+            <input type="text" value="Tersedia" class="form-input form-input-readonly" readonly>
+            <input type="hidden" name="status" value="Tersedia">
+        </div>
 
-<button type="submit">Simpan</button>
-<a href="/admin/kendaraan">Kembali</a>
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">Simpan</button>
+            <a href="/admin/kendaraan" class="btn-cancel">Kembali</a>
+        </div>
 
-</form>
+    </form>
+</div>
+
 </div>
 
 <?= $this->endSection() ?>
