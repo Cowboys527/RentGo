@@ -19,12 +19,23 @@
 <?php endif; ?>
 
 <div class="form-card">
-    <form action="/admin/kendaraan/update/<?= $kendaraan['id_kendaraan'] ?>" method="post" class="kendaraan-form">
+    <form action="/admin/kendaraan/update/<?= $kendaraan['id_kendaraan'] ?>" 
+          method="post" enctype="multipart/form-data" class="kendaraan-form">
 
         <div class="form-group">
             <label class="form-label">Nama Kendaraan:</label>
             <input type="text" name="nama_kendaraan" class="form-input"
                    value="<?= old('nama_kendaraan', $kendaraan['nama_kendaraan']) ?>">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Foto Kendaraan:</label><br>
+            <?php if (!empty($kendaraan['foto'])): ?>
+                <img src="<?= base_url('uploads/kendaraan/'.$kendaraan['foto']) ?>" 
+                     class="foto-preview"><br><br>
+            <?php endif; ?>
+            <input type="file" name="foto" class="form-input">
+            <small class="form-hint">Kosongkan jika tidak ingin ganti foto</small>
         </div>
 
         <div class="form-group">
@@ -47,7 +58,8 @@
 
         <div class="form-group">
             <label class="form-label">Status:</label>
-            <input type="text" value="<?= $kendaraan['status'] ?>" class="form-input form-input-readonly" readonly>
+            <input type="text" value="<?= $kendaraan['status'] ?>" 
+                   class="form-input form-input-readonly" readonly>
             <small class="form-hint">Status diatur otomatis oleh sistem transaksi</small>
         </div>
 

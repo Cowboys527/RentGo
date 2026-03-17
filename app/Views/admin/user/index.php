@@ -15,6 +15,12 @@
     </a>
 </div>
 
+<?php if(session()->getFlashdata('success_user')): ?>
+    <div class="alert-success">
+        <?= session()->getFlashdata('success_user') ?>
+    </div>
+<?php endif; ?>
+
 <!-- SEARCH & FILTER BAR -->
 <div class="filter-bar">
     <form method="get" action="/admin/user" class="search-form">

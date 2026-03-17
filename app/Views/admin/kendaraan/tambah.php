@@ -19,11 +19,17 @@
 <?php endif; ?>
 
 <div class="form-card">
-    <form action="/admin/kendaraan/simpan" method="post" class="kendaraan-form">
+    <form action="/admin/kendaraan/simpan" method="post" 
+          enctype="multipart/form-data" class="kendaraan-form">
 
         <div class="form-group">
             <label class="form-label">Nama Kendaraan:</label>
             <input type="text" name="nama_kendaraan" class="form-input" value="<?= old('nama_kendaraan') ?>">
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Foto Kendaraan:</label>
+            <input type="file" name="foto" class="form-input">
         </div>
 
         <div class="form-group">

@@ -125,6 +125,40 @@
 }
 
 /* ════════════════════════════
+   FOTO UPLOAD & PREVIEW
+════════════════════════════ */
+.foto-preview {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    margin-bottom: 16px;
+    display: block;
+    object-fit: cover;
+}
+
+/* Style untuk input file */
+input[type="file"].form-input {
+    padding: 10px;
+    border: 2px dashed #dfe6ed;
+    background: #f8fafb;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+input[type="file"].form-input:hover {
+    border-color: #1565c0;
+    background: #f0f7ff;
+}
+
+input[type="file"].form-input:focus {
+    border-color: #1565c0;
+    border-style: solid;
+    background: white;
+}
+
+/* ════════════════════════════
    FORM ACTIONS
 ════════════════════════════ */
 .form-actions {

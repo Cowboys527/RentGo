@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════
-   data_kendaraan.css — Data Kendaraan
-   Letakkan di: public/css/data_kendaraan.css
+   index.css — Data Kendaraan (Card Layout)
+   Letakkan di: public/css/kendaraan/index.css
 ═══════════════════════════════════════ */
 
 /* ════════════════════════════
@@ -28,13 +28,13 @@
     font-family: 'Syne', sans-serif;
     font-weight: 700;
     font-size: 28px;
-    color: var(--text, #2c3e50);
+    color: #2c3e50;
     margin: 0 0 6px 0;
 }
 
 .page-subtitle {
     font-size: 14px;
-    color: var(--subtext, #5a6c7d);
+    color: #5a6c7d;
     margin: 0;
 }
 
@@ -61,7 +61,6 @@
     background: #1565c0;
 }
 
-/* Icon Plus untuk Button Add */
 .btn-add::before {
     content: '';
     display: inline-block;
@@ -86,7 +85,6 @@
     position: relative;
 }
 
-/* Icon Checkmark untuk Alert */
 .alert-success::before {
     content: '';
     position: absolute;
@@ -115,7 +113,6 @@
     align-items: center;
 }
 
-/* Search Form */
 .search-form {
     flex: 1;
     min-width: 300px;
@@ -180,7 +177,6 @@
     color: #1976d2;
 }
 
-/* Filter Form */
 .filter-form {
     display: flex;
     gap: 10px;
@@ -220,75 +216,117 @@
 }
 
 /* ════════════════════════════
-   TABLE CARD
+   CARD GRID LAYOUT
 ════════════════════════════ */
-.table-card {
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+/* ════════════════════════════
+   VEHICLE CARD
+════════════════════════════ */
+.vehicle-card {
     background: white;
     border: 1px solid #e0e0e0;
     border-radius: 14px;
-    padding: 24px;
-    overflow-x: auto;
+    overflow: hidden;
+    transition: all 0.2s;
 }
 
-.data-table {
+.vehicle-card:hover {
+    border-color: #1565c0;
+    box-shadow: 0 4px 12px rgba(21, 101, 192, 0.1);
+}
+
+/* Card Image */
+.card-image {
+    position: relative;
     width: 100%;
-    border-collapse: collapse;
+    height: 220px;
+    background: #f5f5f5;
+    overflow: hidden;
 }
 
-.data-table thead tr {
-    border-bottom: 2px solid #e0e0e0;
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.data-table th {
-    text-align: left;
-    padding: 14px 16px;
+.no-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+    color: #95a5a6;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Status Overlay */
+.status-overlay {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 6px 14px;
+    border-radius: 20px;
     font-size: 12px;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    text-transform: capitalize;
+}
+
+.status-tersedia {
+    background: rgba(0, 200, 83, 0.95);
+    color: white;
+}
+
+.status-disewa {
+    background: rgba(255, 152, 0, 0.95);
+    color: white;
+}
+
+/* Card Body */
+.card-body {
+    padding: 20px;
+}
+
+.vehicle-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #2c3e50;
+    margin: 0 0 16px 0;
+}
+
+/* Vehicle Details */
+.vehicle-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.detail-label {
+    font-size: 13px;
     color: #5a6c7d;
+    font-weight: 500;
 }
 
-/* Center align untuk kolom Aksi */
-.data-table th:last-child {
-    text-align: center;
-}
-
-.data-table td {
-    padding: 16px;
+.detail-value {
     font-size: 14px;
     color: #2c3e50;
-    border-bottom: 1px solid #f0f0f0;
-}
-
-.data-table tbody tr {
-    transition: background 0.2s;
-}
-
-.data-table tbody tr:hover {
-    background: #f8fafb;
-}
-
-.data-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-/* Table Styling */
-.table-no {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    background: rgba(21, 101, 192, 0.08);
-    color: #1565c0;
-    font-weight: 700;
-    border-radius: 8px;
-    text-align: center;
-    line-height: 32px;
-}
-
-.td-bold {
-    font-weight: 700;
-    color: #2c3e50;
+    font-weight: 600;
 }
 
 .plat-badge {
@@ -302,115 +340,70 @@
     font-family: 'Courier New', monospace;
 }
 
-.td-price {
-    font-weight: 700;
+.price-item {
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.vehicle-price {
+    font-size: 18px;
     color: #00c853;
-}
-
-/* Status Badge */
-.status-badge {
-    display: inline-block;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
     font-weight: 700;
-    text-transform: capitalize;
 }
 
-.status-tersedia {
-    background: rgba(0, 200, 83, 0.12);
-    color: #00c853;
-}
-
-.status-disewa {
-    background: rgba(255, 152, 0, 0.12);
-    color: #ff9800;
-}
-
-/* Action Buttons */
-.action-buttons {
+/* Card Actions */
+.card-actions {
     display: flex;
     gap: 8px;
-    justify-content: center;
 }
 
-.btn-action {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 12px 7px 36px;
-    font-size: 13px;
+.btn-card {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
     font-weight: 600;
-    border-radius: 6px;
+    border-radius: 8px;
     text-decoration: none;
     transition: all 0.2s;
     cursor: pointer;
-    position: relative;
 }
 
-/* Icon Edit (Pensil Abu-abu) */
-.btn-edit {
+.btn-edit-card {
     background: rgba(21, 101, 192, 0.08);
     color: #1565c0;
 }
 
-.btn-edit::before {
-    content: '';
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
-.btn-edit:hover {
+.btn-edit-card:hover {
     background: #1565c0;
     color: white;
 }
 
-.btn-edit:hover::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'/%3E%3C/svg%3E");
-}
-
-/* Icon Delete (Tong Sampah Abu-abu) */
-.btn-delete {
+.btn-delete-card {
     background: rgba(231, 76, 60, 0.08);
     color: #e74c3c;
 }
 
-.btn-delete::before {
-    content: '';
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23999'%3E%3Cpath d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
-.btn-delete:hover {
+.btn-delete-card:hover {
     background: #e74c3c;
     color: white;
 }
 
-.btn-delete:hover::before {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3E%3C/svg%3E");
-}
-
 /* Empty State */
-.empty-state {
+.empty-state-card {
+    grid-column: 1 / -1;
     text-align: center;
     padding: 60px 20px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 14px;
+}
+
+.empty-state-card p {
     color: #95a5a6;
     font-size: 16px;
     font-style: italic;
+    margin: 0;
 }
 
 /* ════════════════════════════
@@ -422,7 +415,6 @@
     justify-content: center;
 }
 
-/* Style default CI4 pagination */
 .pagination-wrapper ul {
     list-style: none;
     display: flex;
@@ -464,6 +456,12 @@
 /* ════════════════════════════
    RESPONSIVE
 ════════════════════════════ */
+@media (max-width: 1024px) {
+    .cards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
 @media (max-width: 768px) {
     .kendaraan-container {
         padding: 20px 16px;
@@ -494,21 +492,11 @@
         width: 100%;
     }
 
-    .table-card {
-        padding: 16px;
-        overflow-x: scroll;
+    .cards-grid {
+        grid-template-columns: 1fr;
     }
 
-    .data-table {
-        min-width: 800px;
-    }
-
-    .action-buttons {
-        flex-direction: column;
-    }
-
-    .btn-action {
-        width: 100%;
-        justify-content: center;
+    .card-image {
+        height: 200px;
     }
 }

@@ -10,6 +10,7 @@ class KendaraanModel extends Model
 
     protected $allowedFields = [
         'nama_kendaraan',
+        'foto',
         'jenis',
         'plat_nomor',
         'harga_sewa',

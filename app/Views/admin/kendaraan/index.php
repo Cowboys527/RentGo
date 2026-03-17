@@ -23,7 +23,6 @@
 
 <!-- SEARCH & FILTER BAR -->
 <div class="filter-bar">
-    <!-- SEARCH -->
     <form method="get" action="/admin/kendaraan" class="search-form">
         <div class="search-box">
             <input type="text" 
@@ -36,14 +35,13 @@
         </div>
     </form>
 
-    <!-- FILTER -->
     <form method="get" action="/admin/kendaraan" class="filter-form">
         <select name="jenis" class="filter-select">
             <option value="">-- Semua Jenis --</option>
             <option value="SUV" <?= ($jenis=='SUV')?'selected':'' ?>>SUV</option>
             <option value="Sedan" <?= ($jenis=='Sedan')?'selected':'' ?>>Sedan</option>
             <option value="MPV" <?= ($jenis=='MPV')?'selected':'' ?>>MPV</option>
-            <option value="Sports Car" <?= ($jenis=='Sport Car')?'selected':'' ?>>Sports Car</option>
+            <option value="Sports Car" <?= ($jenis=='Sports Car')?'selected':'' ?>>Sports Car</option>
         </select>
 
         <select name="status" class="filter-select">
@@ -56,54 +54,64 @@
     </form>
 </div>
 
-<!-- TABLE CARD -->
-<div class="table-card">
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama Kendaraan</th>
-                <th>Jenis</th>
-                <th>Plat Nomor</th>
-                <th>Harga Sewa</th>
-                <th>Status</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php $no = 1 + (5 * ($pager->getCurrentPage() - 1)); ?>
-            <?php foreach ($kendaraan as $k): ?>
-            <tr>
-                <td><span class="table-no"><?= $no++ ?></span></td>
-                <td class="td-bold"><?= $k['nama_kendaraan'] ?></td>
-                <td><?= $k['jenis'] ?></td>
-                <td><span class="plat-badge"><?= $k['plat_nomor'] ?></span></td>
-                <td class="td-price">Rp <?= number_format($k['harga_sewa']) ?></td>
-                <td>
-                    <?php if ($k['status'] == 'Tersedia'): ?>
-                        <span class="status-badge status-tersedia">Tersedia</span>
-                    <?php else: ?>
-                        <span class="status-badge status-disewa">Disewa</span>
-                    <?php endif; ?>
-                </td>
-                <td>
-                    <div class="action-buttons">
-                        <a href="/admin/kendaraan/edit/<?= $k['id_kendaraan'] ?>" class="btn-action btn-edit">Edit</a>
-                        <a href="/admin/kendaraan/hapus/<?= $k['id_kendaraan'] ?>" 
-                           class="btn-action btn-delete"
-                           onclick="return confirm('Yakin mau hapus?')">Hapus</a>
-                    </div>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-
-            <?php if (empty($kendaraan)): ?>
-            <tr>
-                <td colspan="7" class="empty-state">Belum ada data kendaraan</td>
-            </tr>
+<!-- CARD GRID -->
+<div class="cards-grid">
+    <?php foreach ($kendaraan as $k): ?>
+    <div class="vehicle-card">
+        <!-- Foto -->
+        <div class="card-image">
+            <?php if (!empty($k['foto'])): ?>
+                <img src="<?= base_url('uploads/kendaraan/'.$k['foto']) ?>" alt="<?= esc($k['nama_kendaraan']) ?>">
+            <?php else: ?>
+                <div class="no-image-placeholder">No Image</div>
             <?php endif; ?>
-        </tbody>
-    </table>
+            
+            <!-- Status Badge di atas foto -->
+            <?php if ($k['status'] == 'Tersedia'): ?>
+                <span class="status-overlay status-tersedia">Tersedia</span>
+            <?php else: ?>
+                <span class="status-overlay status-disewa">Disewa</span>
+            <?php endif; ?>
+        </div>
+
+        <!-- Info Kendaraan -->
+        <div class="card-body">
+            <h3 class="vehicle-name"><?= esc($k['nama_kendaraan']) ?></h3>
+            
+            <div class="vehicle-details">
+                <div class="detail-item">
+                    <span class="detail-label">Jenis:</span>
+                    <span class="detail-value"><?= esc($k['jenis']) ?></span>
+                </div>
+                
+                <div class="detail-item">
+                    <span class="detail-label">Plat:</span>
+                    <span class="plat-badge"><?= esc($k['plat_nomor']) ?></span>
+                </div>
+                
+                <div class="detail-item price-item">
+                    <span class="detail-label">Harga Sewa:</span>
+                    <span class="vehicle-price">Rp <?= number_format($k['harga_sewa']) ?></span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="card-actions">
+                <a href="/admin/kendaraan/edit/<?= $k['id_kendaraan'] ?>" 
+                   class="btn-card btn-edit-card">Edit</a>
+                <a href="/admin/kendaraan/hapus/<?= $k['id_kendaraan'] ?>" 
+                   class="btn-card btn-delete-card"
+                   onclick="return confirm('Yakin mau hapus?')">Hapus</a>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; ?>
+
+    <?php if (empty($kendaraan)): ?>
+    <div class="empty-state-card">
+        <p>Belum ada data kendaraan</p>
+    </div>
+    <?php endif; ?>
 </div>
 
 <!-- PAGINATION -->

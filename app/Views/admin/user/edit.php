@@ -18,6 +18,12 @@
     </div>
 <?php endif; ?>
 
+<?php if(session()->getFlashdata('success_user')): ?>
+    <div class="alert-success">
+        <?= session()->getFlashdata('success_user') ?>
+    </div>
+<?php endif; ?>
+
 <div class="form-card">
     <form action="/admin/user/update/<?= $user['id_user'] ?>" method="post" class="user-form">
 

@@ -23,10 +23,10 @@ class User extends BaseController
             $model->where('role', $role);
         }
 
-        $data['user']   = $model->paginate(5);
-        $data['pager']  = $model->pager;
-        $data['keyword']= $keyword;
-        $data['role']   = $role;
+        $data['user']    = $model->paginate(5);
+        $data['pager']   = $model->pager;
+        $data['keyword'] = $keyword;
+        $data['role']    = $role;
 
         return view('admin/user/index', $data);
     }
@@ -60,7 +60,7 @@ class User extends BaseController
         ]);
 
         return redirect()->to('/admin/user')
-            ->with('success', 'User berhasil ditambahkan');
+            ->with('success_user', 'User berhasil ditambahkan');
     }
 
     public function edit($id)
@@ -92,7 +92,6 @@ class User extends BaseController
             'status'   => $this->request->getPost('status'),
         ];
 
-        // Jika password diisi, update password
         if ($this->request->getPost('password')) {
             $dataUpdate['password'] = password_hash(
                 $this->request->getPost('password'),
@@ -104,7 +103,7 @@ class User extends BaseController
         $model->update($id, $dataUpdate);
 
         return redirect()->to('/admin/user')
-            ->with('success', 'User berhasil diupdate');
+            ->with('success_user', 'User berhasil diupdate');
     }
 
     public function hapus($id)
@@ -113,6 +112,6 @@ class User extends BaseController
         $model->delete($id);
 
         return redirect()->to('/admin/user')
-            ->with('success', 'User berhasil dihapus');
+            ->with('success_user', 'User berhasil dihapus');
     }
 }

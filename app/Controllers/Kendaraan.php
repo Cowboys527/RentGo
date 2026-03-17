@@ -57,8 +57,23 @@ class Kendaraan extends BaseController
                              ->with('errors', $this->validator->getErrors());
         }
 
+        $foto = $this->request->getFile('foto');
+        $namaFoto = null;
+
+        if ($foto && $foto->isValid() && !$foto->hasMoved()) {
+            $namaFoto = $foto->getRandomName();
+            $foto->move('uploads/kendaraan', $namaFoto);
+        }
+
         $model = new KendaraanModel();
-        $model->save($this->request->getPost());
+        $model->save([
+            'nama_kendaraan' => $this->request->getPost('nama_kendaraan'),
+            'foto'           => $namaFoto,
+            'jenis'          => $this->request->getPost('jenis'),
+            'plat_nomor'     => $this->request->getPost('plat_nomor'),
+            'harga_sewa'     => $this->request->getPost('harga_sewa'),
+            'status'         => $this->request->getPost('status'),
+        ]);
 
         return redirect()->to('/admin/kendaraan')
                          ->with('success', 'Data kendaraan berhasil ditambahkan');
@@ -74,29 +89,40 @@ class Kendaraan extends BaseController
 
     public function update($id)
     {
-    if (!$this->validate([
-        'nama_kendaraan' => 'required',
-        'jenis'          => 'required',
-        'plat_nomor'     => 'required',
-        'harga_sewa'     => 'required|numeric',
-    ])) {
-        return redirect()->back()
-                         ->withInput()
-                         ->with('errors', $this->validator->getErrors());
+        if (!$this->validate([
+            'nama_kendaraan' => 'required',
+            'jenis'          => 'required',
+            'plat_nomor'     => 'required',
+            'harga_sewa'     => 'required|numeric',
+        ])) {
+            return redirect()->back()
+                             ->withInput()
+                             ->with('errors', $this->validator->getErrors());
+        }
+
+        $model = new KendaraanModel();
+
+        $dataUpdate = [
+            'nama_kendaraan' => $this->request->getPost('nama_kendaraan'),
+            'jenis'          => $this->request->getPost('jenis'),
+            'plat_nomor'     => $this->request->getPost('plat_nomor'),
+            'harga_sewa'     => $this->request->getPost('harga_sewa'),
+        ];
+
+        $foto = $this->request->getFile('foto');
+
+        if ($foto && $foto->isValid() && !$foto->hasMoved()) {
+            $namaFoto = $foto->getRandomName();
+            $foto->move('uploads/kendaraan', $namaFoto);
+            $dataUpdate['foto'] = $namaFoto;
+        }
+
+        $model->update($id, $dataUpdate);
+
+        return redirect()->to('/admin/kendaraan')
+                         ->with('success', 'Data kendaraan berhasil diupdate');
     }
 
-    $model = new KendaraanModel();
-    $model->update($id, [
-        'nama_kendaraan' => $this->request->getPost('nama_kendaraan'),
-        'jenis'          => $this->request->getPost('jenis'),
-        'plat_nomor'     => $this->request->getPost('plat_nomor'),
-        'harga_sewa'     => $this->request->getPost('harga_sewa'),
-    ]);
-
-    return redirect()->to('/admin/kendaraan')
-                     ->with('success', 'Data kendaraan berhasil diupdate');
-    
-    }
     public function hapus($id)
     {
         $model = new KendaraanModel();
