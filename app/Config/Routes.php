@@ -6,15 +6,16 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
-//Welcome page and login/logout
-$routes->get('/', 'Home::index'); // welcome page
+// Welcome & Auth
+$routes->get('/', 'Home::index');
 $routes->get('/login', 'Auth::index');
-
 $routes->post('/auth/login', 'Auth::login');
 $routes->get('/logout', 'Auth::logout');
 
-// Admin Routes
+
+// ================= ADMIN =================
 $routes->group('admin', function($routes) {
+
     $routes->get('dashboard', 'Admin::dashboard');
 
     // Kendaraan
@@ -26,14 +27,38 @@ $routes->group('admin', function($routes) {
     $routes->get('kendaraan/hapus/(:num)', 'Kendaraan::hapus/$1');
 
     // User
-$routes->get('user', 'User::index');
-$routes->get('user/tambah', 'User::tambah');
-$routes->post('user/simpan', 'User::simpan');
-$routes->get('user/edit/(:num)', 'User::edit/$1');
-$routes->post('user/update/(:num)', 'User::update/$1');
-$routes->get('user/hapus/(:num)', 'User::hapus/$1');
+    $routes->get('user', 'User::index');
+    $routes->get('user/tambah', 'User::tambah');
+    $routes->post('user/simpan', 'User::simpan');
+    $routes->get('user/edit/(:num)', 'User::edit/$1');
+    $routes->post('user/update/(:num)', 'User::update/$1');
+    $routes->get('user/hapus/(:num)', 'User::hapus/$1');
 
 });
 
 
+$routes->group('kasir', function($routes){
+    $routes->get('dashboard', 'Kasir::dashboard');
 
+    // TRANSAKSI
+    $routes->get('transaksi', 'Kasir::transaksi');
+    $routes->get('transaksi/tambah', 'Kasir::tambah');
+
+    // STEP 1
+    $routes->post('transaksi/simpan', 'Kasir::simpanTransaksi');
+
+    // STEP 2
+    $routes->get('transaksi/pembayaran', 'Kasir::pembayaran');
+    $routes->post('transaksi/proses', 'Kasir::prosesPembayaran');
+
+    $routes->get('transaksi/detail/(:num)', 'Kasir::detail/$1');
+    $routes->post('transaksi/bayar-sisa/(:num)', 'Kasir::bayarSisa/$1');
+    $routes->get('transaksi/struk/(:num)', 'Kasir::struk/$1');
+    $routes->get('transaksi/kembalikan/(:num)', 'Kasir::formKembalikan/$1');
+    $routes->post('transaksi/kembalikan/proses/(:num)', 'Kasir::prosesKembalikan/$1');
+});
+
+// ================= OWNER =================
+$routes->group('owner', function($routes){
+    $routes->get('dashboard', 'Owner::dashboard');
+});

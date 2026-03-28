@@ -26,11 +26,11 @@ class Admin extends BaseController
         $totalKendaraan = $kendaraanModel->countAll();
 
         $tersedia = $kendaraanModel
-            ->where('status', 'Tersedia')
+            ->where('status', 'tersedia')
             ->countAllResults();
 
         $disewa = $kendaraanModel
-            ->where('status', 'Disewa')
+            ->where('status', 'disewa')
             ->countAllResults();
 
         $totalUser = $userModel->countAll();
@@ -42,18 +42,18 @@ class Admin extends BaseController
         $today = date('Y-m-d');
 
         $transaksiHariIni = $transaksiModel
-            ->select('
-                transaksi.id_transaksi,
-                kendaraan.nama_kendaraan,
-                users.nama AS nama_user,
-                transaksi.status_bayar,
-                transaksi.tgl_sewa
-            ')
-            ->join('kendaraan', 'kendaraan.id_kendaraan = transaksi.id_kendaraan')
-            ->join('users', 'users.id_user = transaksi.id_user')
-            ->where('DATE(transaksi.tgl_sewa)', $today)
-            ->orderBy('transaksi.id_transaksi', 'DESC')
-            ->findAll();
+        ->select('
+        transaksi.id_transaksi,
+        kendaraan.nama_kendaraan,
+        kendaraan.status AS status_kendaraan,
+        users.nama AS nama_user,
+        transaksi.tgl_sewa
+        ')
+        ->join('kendaraan', 'kendaraan.id_kendaraan = transaksi.id_kendaraan')
+        ->join('users', 'users.id_user = transaksi.id_user')
+        ->where('transaksi.tgl_sewa', $today)
+        ->orderBy('transaksi.id_transaksi', 'DESC')
+        ->findAll();
 
         // =============================
         // KIRIM KE VIEW

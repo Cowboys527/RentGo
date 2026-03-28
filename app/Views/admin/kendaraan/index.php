@@ -46,8 +46,8 @@
 
         <select name="status" class="filter-select">
             <option value="">-- Semua Status --</option>
-            <option value="Tersedia" <?= ($status=='Tersedia')?'selected':'' ?>>Tersedia</option>
-            <option value="Disewa" <?= ($status=='Disewa')?'selected':'' ?>>Disewa</option>
+            <option value="tersedia" <?= ($status=='tersedia')?'selected':'' ?>>Tersedia</option>
+            <option value="disewa" <?= ($status=='disewa')?'selected':'' ?>>Disewa</option>
         </select>
 
         <button type="submit" class="btn-filter">Filter</button>
@@ -67,7 +67,7 @@
             <?php endif; ?>
             
             <!-- Status Badge di atas foto -->
-            <?php if ($k['status'] == 'Tersedia'): ?>
+            <?php if ($k['status'] == 'tersedia'): ?>
                 <span class="status-overlay status-tersedia">Tersedia</span>
             <?php else: ?>
                 <span class="status-overlay status-disewa">Disewa</span>

@@ -15,9 +15,15 @@ class TransaksiModel extends Model
     'id_kendaraan',
     'tgl_sewa',
     'lama_sewa',
+    'tgl_kembali_rencana',
+    'tgl_kembali',
     'total_bayar',
+    'dp',
+    'sisa_bayar',
+    'denda',
+    'metode_bayar',
     'status_bayar',
-    'tgl_kembali'
+    'status_sewa'
     
     ];
 }

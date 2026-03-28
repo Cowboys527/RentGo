@@ -50,7 +50,7 @@
         <div class="form-group">
             <label class="form-label">Status:</label>
             <input type="text" value="Tersedia" class="form-input form-input-readonly" readonly>
-            <input type="hidden" name="status" value="Tersedia">
+            <input type="hidden" name="status" value="tersedia">
         </div>
 
         <div class="form-actions">

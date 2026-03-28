@@ -92,10 +92,12 @@
                             <td><?= $t['nama_kendaraan'] ?></td>
                             <td><?= $t['nama_user'] ?></td>
                             <td>
-                                <span class="status-badge <?= strtolower($t['status_bayar']) == 'lunas' ? 'status-lunas' : 'status-disewa' ?>">
-                                    <?= $t['status_bayar'] ?>
-                                </span>
-                            </td>
+    <?php $status = strtolower($t['status_kendaraan']); ?>
+
+    <span class="status-badge <?= $status == 'tersedia' ? 'status-lunas' : 'status-disewa' ?>">
+        <?= ucfirst($t['status_kendaraan']) ?>
+    </span>
+         </td>
                             <td><?= date('d M Y', strtotime($t['tgl_sewa'])) ?></td>
                         </tr>
                     <?php endforeach; ?>
