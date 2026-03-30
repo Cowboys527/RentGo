@@ -17,6 +17,43 @@
 
 <h3>Daftar Transaksi</h3>
 
+<!-- ================= FILTER ================= -->
+<form method="get" style="margin-bottom:20px; display:flex; gap:10px; flex-wrap:wrap;">
+
+    <!-- SEARCH -->
+    <input type="text" name="keyword" placeholder="Cari pelanggan..."
+        value="<?= $_GET['keyword'] ?? '' ?>"
+        style="padding:8px; width:200px;">
+
+    <!-- STATUS BAYAR -->
+    <select name="status_bayar" style="padding:8px;">
+        <option value="">-- Status Bayar --</option>
+        <option value="Belum Bayar" <?= (($_GET['status_bayar'] ?? '')=='Belum Bayar')?'selected':'' ?>>Belum Bayar</option>
+        <option value="DP" <?= (($_GET['status_bayar'] ?? '')=='DP')?'selected':'' ?>>DP</option>
+        <option value="Lunas" <?= (($_GET['status_bayar'] ?? '')=='Lunas')?'selected':'' ?>>Lunas</option>
+    </select>
+
+    <!-- STATUS SEWA -->
+    <select name="status_sewa" style="padding:8px;">
+        <option value="">-- Status Sewa --</option>
+        <option value="Berlangsung" <?= (($_GET['status_sewa'] ?? '')=='Berlangsung')?'selected':'' ?>>Berlangsung</option>
+        <option value="Selesai" <?= (($_GET['status_sewa'] ?? '')=='Selesai')?'selected':'' ?>>Selesai</option>
+    </select>
+
+    <!-- BUTTON -->
+    <button type="submit" style="padding:8px 15px; background:#2563eb; color:white;">
+        Filter
+    </button>
+
+    <a href="<?= base_url('kasir/transaksi') ?>">
+        <button type="button" style="padding:8px 15px; background:#6b7280; color:white;">
+            Reset
+        </button>
+    </a>
+
+</form>
+
+<!-- ================= TABEL ================= -->
 <table border="1" cellpadding="8" style="border-collapse:collapse; width:100%;">
 <tr>
     <th>ID</th>
@@ -32,6 +69,12 @@
     <th>Aksi</th>
 </tr>
 
+<?php if(empty($transaksi)): ?>
+<tr>
+    <td colspan="11" style="text-align:center;">Data tidak ditemukan</td>
+</tr>
+<?php endif; ?>
+
 <?php foreach ($transaksi as $t): ?>
 <tr>
     <td><?= $t['id_transaksi'] ?></td>
@@ -42,37 +85,63 @@
     <td>Rp <?= number_format($t['total_bayar']) ?></td>
     <td>Rp <?= number_format($t['sisa_bayar']) ?></td>
     <td>Rp <?= number_format($t['denda'] ?? 0) ?></td>
-    <td><?= $t['status_bayar'] ?></td>
-    <td><?= $t['status_sewa'] ?></td>
+
+    <!-- STATUS BAYAR -->
+    <td>
+        <span style="
+            padding:5px 10px;
+            border-radius:5px;
+            color:white;
+            background:
+            <?= $t['status_bayar']=='Lunas' ? 'green' : ($t['status_bayar']=='DP' ? 'orange' : 'red') ?>;">
+            <?= $t['status_bayar'] ?>
+        </span>
+    </td>
+
+    <!-- STATUS SEWA -->
+    <td>
+        <span style="
+            padding:5px 10px;
+            border-radius:5px;
+            color:white;
+            background:
+            <?= $t['status_sewa']=='Selesai' ? 'green' : 'blue' ?>;">
+            <?= $t['status_sewa'] ?>
+        </span>
+    </td>
+
+    <!-- AKSI -->
     <td>
         <a href="<?= base_url('kasir/transaksi/detail/'.$t['id_transaksi']) ?>">
             Detail
         </a>
 
-        <!-- STATUS BERLANGSUNG -->
-<?php if($t['status_sewa'] == 'Berlangsung'): ?>
+        <?php if($t['status_sewa'] == 'Berlangsung'): ?>
 
-    <?php if($t['status_bayar'] == 'Lunas'): ?>
-        |
-        <a href="<?= base_url('kasir/transaksi/kembalikan/'.$t['id_transaksi']) ?>">
-            Kembalikan
-        </a>
-    <?php else: ?>
-        |
-        <span style="color:red;">Belum Lunas</span>
-    <?php endif; ?>
+            <?php if($t['status_bayar'] == 'Lunas'): ?>
+                |
+                <a href="<?= base_url('kasir/transaksi/kembalikan/'.$t['id_transaksi']) ?>">
+                    Kembalikan
+                </a>
+            <?php else: ?>
+                |
+                <span style="color:red;">Belum Lunas</span>
+            <?php endif; ?>
 
-<!-- STATUS SUDAH SELESAI -->
-<?php elseif($t['status_sewa'] == 'Selesai'): ?>
+        <?php elseif($t['status_sewa'] == 'Selesai'): ?>
 
-    |
-    <span style="color:green; font-weight:bold;">Selesai</span>
+            |
+            <span style="color:green; font-weight:bold;">Selesai</span>
 
-<?php endif; ?>
+        <?php endif; ?>
     </td>
 </tr>
 <?php endforeach; ?>
 
 </table>
+
+<div style="margin-top:20px;">
+    <?= $pager->links() ?>
+</div>
 
 <?= $this->endSection() ?>

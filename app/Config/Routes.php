@@ -50,6 +50,7 @@ $routes->group('kasir', function($routes){
     // STEP 2
     $routes->get('transaksi/pembayaran', 'Kasir::pembayaran');
     $routes->post('transaksi/proses', 'Kasir::prosesPembayaran');
+    $routes->get('transaksi/batal', 'Kasir::batalPembayaran');
 
     $routes->get('transaksi/detail/(:num)', 'Kasir::detail/$1');
     $routes->post('transaksi/bayar-sisa/(:num)', 'Kasir::bayarSisa/$1');

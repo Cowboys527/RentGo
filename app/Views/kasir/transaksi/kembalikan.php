@@ -14,7 +14,21 @@
 
 <hr>
 
+<?php if(session()->getFlashdata('error')): ?>
+<p style="color:red;"><?= session()->getFlashdata('error') ?></p>
+<?php endif; ?>
+
 <form method="post" action="<?= base_url('kasir/transaksi/kembalikan/proses/'.$t['id_transaksi']) ?>">
+
+   <p><b>Hari ini:</b> <?= date('d-m-Y') ?></p>
+   
+    <?php if($denda > 0): ?>
+        <label>Bayar Denda:</label><br>
+        <input type="number" name="bayar_denda" required placeholder="Masukkan jumlah bayar"><br><br>
+    <?php else: ?>
+        <p style="color:green;">Tidak ada denda</p>
+    <?php endif; ?>
+
     <button type="submit" style="background:green; color:white; padding:10px;">
         Konfirmasi Pengembalian
     </button>

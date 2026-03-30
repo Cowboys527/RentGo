@@ -46,50 +46,42 @@ class Kasir extends BaseController
         return redirect()->to('/login');
     }
 
-    $db = \Config\Database::connect();
+    $transaksiModel = new \App\Models\TransaksiModel();
 
-    $transaksi = $db->table('transaksi t')
+    $keyword = $this->request->getGet('keyword');
+    $status_bayar = $this->request->getGet('status_bayar');
+    $status_sewa = $this->request->getGet('status_sewa');
+
+    $transaksiModel
         ->select('
-            t.id_transaksi,
-            p.nama AS nama_pelanggan,
-            k.nama_kendaraan,
-            t.tgl_sewa,
-            t.lama_sewa,
-            t.total_bayar,
-            t.sisa_bayar,
-            t.status_bayar,
-            t.status_sewa,
-            t.denda
+            transaksi.*,
+            pelanggan.nama AS nama_pelanggan,
+            kendaraan.nama_kendaraan
         ')
-        ->join('pelanggan p', 'p.id_pelanggan = t.id_pelanggan')
-        ->join('kendaraan k', 'k.id_kendaraan = t.id_kendaraan')
-        ->orderBy('t.id_transaksi', 'DESC')
-        ->get()
-        ->getResultArray();
+        ->join('pelanggan', 'pelanggan.id_pelanggan = transaksi.id_pelanggan')
+        ->join('kendaraan', 'kendaraan.id_kendaraan = transaksi.id_kendaraan');
 
-    return view('kasir/transaksi/index', [
-        'transaksi' => $transaksi
-    ]);
-}
-
-   // ================= FORM TAMBAH =================
-public function tambah()
-{
-    if (!session()->get('logged_in') || session()->get('role') != 'kasir') {
-        return redirect()->to('/login');
+    if (!empty($keyword)) {
+        $transaksiModel->like('pelanggan.nama', $keyword);
     }
 
-    $kendaraanModel = new \App\Models\KendaraanModel();
+    if (!empty($status_bayar)) {
+        $transaksiModel->where('transaksi.status_bayar', $status_bayar);
+    }
 
-    $kendaraan = $kendaraanModel
-        ->where('status', 'tersedia')
-        ->findAll();
+    if (!empty($status_sewa)) {
+        $transaksiModel->where('transaksi.status_sewa', $status_sewa);
+    }
 
-    return view('kasir/transaksi/tambah', [
-        'kendaraan' => $kendaraan
+    $transaksi = $transaksiModel
+        ->orderBy('transaksi.id_transaksi', 'DESC')
+        ->paginate(10);
+
+    return view('kasir/transaksi/index', [
+        'transaksi' => $transaksi,
+        'pager' => $transaksiModel->pager
     ]);
 }
-
 
 // ================= STEP 1 =================
 public function simpanTransaksi()
@@ -279,9 +271,23 @@ public function struk($id)
         ->get()
         ->getRowArray();
 
-    return view('kasir/transaksi/struk', [
+    // Load view jadi HTML
+    $html = view('kasir/transaksi/struk_pdf', [
         't' => $transaksi
     ]);
+
+    // Load Dompdf
+    $dompdf = new \Dompdf\Dompdf();
+
+    $dompdf->loadHtml($html);
+
+    // Ukuran struk (kecil kayak thermal)
+    $dompdf->setPaper([0, 0, 226.77, 600], 'portrait');
+
+    $dompdf->render();
+
+    // Output langsung ke browser
+    $dompdf->stream("struk_rental.pdf", ["Attachment" => false]);
 }
 
 public function kembalikan($id)
@@ -385,7 +391,7 @@ public function prosesKembalikan($id)
         return redirect()->back()->with('error', 'Data tidak ditemukan');
     }
 
-    // ❗ TAMBAHAN VALIDASI
+    // ❗ VALIDASI
     if ($transaksi['status_sewa'] == 'Selesai') {
         return redirect()->back()->with('error', 'Sudah dikembalikan!');
     }
@@ -395,22 +401,35 @@ public function prosesKembalikan($id)
     }
 
     $tgl_kembali = date('Y-m-d');
+    $rencana = $transaksi['tgl_kembali_rencana'];
 
     // HITUNG TELAT
-    $tgl_kembali = date('Y-m-d');
+    $telat = 0;
+    if ($tgl_kembali > $rencana) {
+        $start = new \DateTime($rencana);
+        $end   = new \DateTime($tgl_kembali);
+        $telat = $start->diff($end)->days;
+    }
 
-$rencana = $transaksi['tgl_kembali_rencana'];
+    $denda = $telat * 100000;
 
-$telat = 0;
+    // ❗ VALIDASI BAYAR DENDA
+    $bayar = (int)$this->request->getPost('bayar_denda');
 
-if ($tgl_kembali > $rencana) {
-    $start = new \DateTime($rencana);
-    $end   = new \DateTime($tgl_kembali);
+    if ($denda > 0) {
+        if ($bayar <= 0) {
+            return redirect()->back()->with('error', 'Harus bayar denda!');
+        }
 
-    $telat = $start->diff($end)->days;
-}
+        if ($bayar < $denda) {
+            return redirect()->back()->with('error', 'Denda belum lunas!');
+        }
+    }
 
-$denda = $telat * 100000;
+    $kembalian = 0;
+    if ($bayar > $denda) {
+        $kembalian = $bayar - $denda;
+    }
 
     // UPDATE TRANSAKSI
     $transaksiModel->update($id, [
@@ -425,7 +444,18 @@ $denda = $telat * 100000;
     ]);
 
     return redirect()->to('/kasir/transaksi')
-        ->with('success', 'Pengembalian berhasil. Denda: Rp '.number_format($denda));
+        ->with('success', 
+            'Pengembalian berhasil | Denda: Rp '.number_format($denda).
+            ' | Kembalian: Rp '.number_format($kembalian)
+        );
+}
+
+public function batalPembayaran()
+{
+    session()->remove('transaksi_temp');
+
+    return redirect()->to('/kasir/transaksi')
+        ->with('success', 'Transaksi dibatalkan');
 }
 
 }
