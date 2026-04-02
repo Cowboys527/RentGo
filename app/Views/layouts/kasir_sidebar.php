@@ -31,13 +31,6 @@
             <li>
                 <a href="/kasir/transaksi">
                     <span class="material-icons">assignment</span>
-                    Transaksi Rental
-                </a>
-            </li>
-
-            <li>
-                <a href="/kasir/daftar">
-                    <span class="material-icons">receipt_long</span>
                     Daftar Transaksi
                 </a>
             </li>

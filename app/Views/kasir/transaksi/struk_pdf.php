@@ -55,5 +55,5 @@ Status: <?= $t['status_bayar'] ?><br>
 <div class="line"></div>
 
 <div class="center">
-    Terima Kasio
+    Terima Kasih
 </div>

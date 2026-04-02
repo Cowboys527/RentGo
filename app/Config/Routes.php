@@ -57,6 +57,7 @@ $routes->group('kasir', function($routes){
     $routes->get('transaksi/struk/(:num)', 'Kasir::struk/$1');
     $routes->get('transaksi/kembalikan/(:num)', 'Kasir::formKembalikan/$1');
     $routes->post('transaksi/kembalikan/proses/(:num)', 'Kasir::prosesKembalikan/$1');
+
 });
 
 // ================= OWNER =================

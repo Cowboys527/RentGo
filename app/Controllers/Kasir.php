@@ -10,36 +10,51 @@ use App\Models\PelangganModel;
 
 class Kasir extends BaseController
 {
-    // ================= DASHBOARD =================
+    
     public function dashboard()
-    {
-        if (!session()->get('logged_in') || session()->get('role') != 'kasir') {
-            return redirect()->to('/login');
-        }
-
-        $transaksiModel = new TransaksiModel();
-        $kendaraanModel = new KendaraanModel();
-
-        $transaksiHariIni = $transaksiModel
-            ->where('tgl_sewa', date('Y-m-d'))
-            ->countAllResults();
-
-        $kendaraanTersedia = $kendaraanModel
-            ->where('status', 'tersedia')
-            ->countAllResults();
-
-        $kendaraanDisewa = $kendaraanModel
-            ->where('status', 'disewa')
-            ->countAllResults();
-
-        return view('kasir/dashboard', [
-            'transaksiHariIni'   => $transaksiHariIni,
-            'kendaraanTersedia'  => $kendaraanTersedia,
-            'kendaraanDisewa'    => $kendaraanDisewa
-        ]);
+{
+    if (!session()->get('logged_in') || session()->get('role') != 'kasir') {
+        return redirect()->to('/login');
     }
 
-    // ================= HALAMAN LIST TRANSAKSI =================
+    $transaksiModel = new TransaksiModel();
+    $kendaraanModel = new KendaraanModel();
+
+   
+    $transaksiHariIni = $transaksiModel
+        ->where('tgl_sewa', date('Y-m-d'))
+        ->countAllResults();
+
+    $kendaraanTersedia = $kendaraanModel
+        ->where('status', 'tersedia')
+        ->countAllResults();
+
+    $kendaraanDisewa = $kendaraanModel
+        ->where('status', 'disewa')
+        ->countAllResults();
+
+
+    $daftarTransaksi = $transaksiModel
+        ->select('
+            transaksi.*,
+            pelanggan.nama AS nama_pelanggan,
+            kendaraan.nama_kendaraan
+        ')
+        ->join('pelanggan', 'pelanggan.id_pelanggan = transaksi.id_pelanggan')
+        ->join('kendaraan', 'kendaraan.id_kendaraan = transaksi.id_kendaraan')
+        ->where('transaksi.tgl_sewa', date('Y-m-d'))
+        ->orderBy('transaksi.id_transaksi', 'DESC')
+        ->findAll();
+
+    return view('kasir/dashboard', [
+        'transaksiHariIni'   => $transaksiHariIni,
+        'kendaraanTersedia'  => $kendaraanTersedia,
+        'kendaraanDisewa'    => $kendaraanDisewa,
+        'daftarTransaksi'    => $daftarTransaksi 
+    ]);
+}
+
+    
     public function transaksi()
 {
     if (!session()->get('logged_in') || session()->get('role') != 'kasir') {
@@ -83,55 +98,112 @@ class Kasir extends BaseController
     ]);
 }
 
-// ================= STEP 1 =================
+
+public function tambah()
+{
+    if (!session()->get('logged_in') || session()->get('role') != 'kasir') {
+        return redirect()->to('/login');
+    }
+
+    $kendaraanModel = new \App\Models\KendaraanModel();
+
+    $kendaraan = $kendaraanModel
+        ->where('status', 'tersedia')
+        ->findAll();
+
+    return view('kasir/transaksi/tambah', [
+        'kendaraan' => $kendaraan
+    ]);
+}
+
+
 public function simpanTransaksi()
 {
     $kendaraanModel = new \App\Models\KendaraanModel();
     $pelangganModel = new \App\Models\PelangganModel();
 
+    // ================= INPUT =================
     $id_kendaraan = $this->request->getPost('id_kendaraan');
-    $nama = $this->request->getPost('nama_pelanggan');
-    $no_hp = $this->request->getPost('no_hp');
-    $alamat = $this->request->getPost('alamat');
+    $nama         = $this->request->getPost('nama_pelanggan');
+    $no_hp        = $this->request->getPost('no_hp');
+    $alamat       = $this->request->getPost('alamat');
+    $nik          = $this->request->getPost('nik');
 
-    $tgl_sewa = $this->request->getPost('tgl_sewa');
+    // ================= VALIDASI NIK =================
+    if (empty($nik)) {
+        return redirect()->back()->with('error', 'NIK wajib diisi');
+    }
+
+    if (!preg_match('/^[0-9]{16}$/', $nik)) {
+        return redirect()->back()->with('error', 'NIK harus 16 digit angka!');
+    }
+
+    // ================= TANGGAL =================
+    $tgl_sewa    = $this->request->getPost('tgl_sewa');
     $tgl_kembali = $this->request->getPost('tgl_kembali');
 
-    // HITUNG LAMA SEWA
+    // ================= UPLOAD KTP =================
+$fileKtp = $this->request->getFile('foto_ktp');
+$namaFileKtp = null;
+
+if ($fileKtp && $fileKtp->isValid() && !$fileKtp->hasMoved()) {
+    $namaFileKtp = $fileKtp->getRandomName();
+    $fileKtp->move(FCPATH . 'uploads/ktp', $namaFileKtp);
+} else {
+    return redirect()->back()->with('error', 'Upload KTP gagal');
+}
+
+// ================= UPLOAD SIM =================
+$fileSim = $this->request->getFile('foto_sim');
+$namaFileSim = null;
+
+if ($fileSim && $fileSim->isValid() && !$fileSim->hasMoved()) {
+    $namaFileSim = $fileSim->getRandomName();
+    $fileSim->move(FCPATH . 'uploads/sim', $namaFileSim);
+} else {
+    return redirect()->back()->with('error', 'Upload SIM gagal');
+}
+
+    
     $start = new \DateTime($tgl_sewa);
     $end   = new \DateTime($tgl_kembali);
+
     $lama_sewa = $start->diff($end)->days;
     if ($lama_sewa <= 0) $lama_sewa = 1;
 
-    // SIMPAN PELANGGAN
+    
     $pelangganModel->insert([
-        'nama' => $nama,
-        'no_hp' => $no_hp,
-        'alamat' => $alamat
+        'nama'     => $nama,
+        'no_hp'    => $no_hp,
+        'alamat'   => $alamat,
+        'nik'      => $nik,
+        'foto_ktp' => $namaFileKtp,
+        'foto_sim' => $namaFileSim
     ]);
+
     $id_pelanggan = $pelangganModel->insertID();
 
-    // AMBIL HARGA KENDARAAN
+    
     $kendaraan = $kendaraanModel->find($id_kendaraan);
-    $harga = $kendaraan['harga_sewa'];
+    $harga     = $kendaraan['harga_sewa'];
 
     $total = $harga * $lama_sewa;
 
-    // SIMPAN KE SESSION
+    
     session()->set('transaksi_temp', [
         'id_kendaraan' => $id_kendaraan,
         'id_pelanggan' => $id_pelanggan,
-        'tgl_sewa' => $tgl_sewa,
-        'tgl_kembali' => $tgl_kembali,
-        'lama_sewa' => $lama_sewa,
-        'total_bayar' => $total
+        'tgl_sewa'     => $tgl_sewa,
+        'tgl_kembali'  => $tgl_kembali,
+        'lama_sewa'    => $lama_sewa,
+        'total_bayar'  => $total
     ]);
 
     return redirect()->to('/kasir/transaksi/pembayaran');
 }
 
 
-// ================= HALAMAN PEMBAYARAN =================
+
 public function pembayaran()
 {
     $data = session()->get('transaksi_temp');
@@ -146,7 +218,7 @@ public function pembayaran()
 }
 
 
-// ================= PROSES PEMBAYARAN =================
+
 public function prosesPembayaran()
 {
     $transaksiModel = new \App\Models\TransaksiModel();
@@ -196,7 +268,7 @@ public function prosesPembayaran()
         'status_sewa' => 'Berlangsung'
     ]);
 
-    // UPDATE STATUS KENDARAAN
+    
     $kendaraanModel->update($data['id_kendaraan'], [
         'status' => 'disewa'
     ]);
@@ -216,7 +288,14 @@ public function detail($id)
     $db = \Config\Database::connect();
 
     $transaksi = $db->table('transaksi t')
-        ->select('t.*, p.nama, k.nama_kendaraan')
+        ->select('
+            t.*, 
+            p.nama AS nama_pelanggan,
+            p.nik AS nik_pelanggan,
+            p.foto_ktp AS foto_ktp_pelanggan,
+            p.foto_sim AS foto_sim_pelanggan,
+            k.nama_kendaraan
+        ')
         ->join('pelanggan p', 'p.id_pelanggan = t.id_pelanggan')
         ->join('kendaraan k', 'k.id_kendaraan = t.id_kendaraan')
         ->where('t.id_transaksi', $id)
@@ -271,22 +350,22 @@ public function struk($id)
         ->get()
         ->getRowArray();
 
-    // Load view jadi HTML
+    
     $html = view('kasir/transaksi/struk_pdf', [
         't' => $transaksi
     ]);
 
-    // Load Dompdf
+    
     $dompdf = new \Dompdf\Dompdf();
 
     $dompdf->loadHtml($html);
 
-    // Ukuran struk (kecil kayak thermal)
+    
     $dompdf->setPaper([0, 0, 226.77, 600], 'portrait');
 
     $dompdf->render();
 
-    // Output langsung ke browser
+    
     $dompdf->stream("struk_rental.pdf", ["Attachment" => false]);
 }
 
@@ -301,7 +380,7 @@ public function kembalikan($id)
         return redirect()->back()->with('error', 'Transaksi tidak ditemukan');
     }
 
-    // ❗ VALIDASI: HARUS LUNAS
+    
     if ($transaksi['status_bayar'] != 'Lunas') {
         return redirect()->back()->with('error', 'Transaksi belum lunas!');
     }
@@ -309,7 +388,7 @@ public function kembalikan($id)
     $tgl_kembali_real = date('Y-m-d');
     $tgl_rencana = $transaksi['tgl_kembali_rencana'];
 
-    // ================= HITUNG TELAT =================
+    
     $start = new \DateTime($tgl_rencana);
     $end   = new \DateTime($tgl_kembali_real);
 
@@ -318,18 +397,18 @@ public function kembalikan($id)
         $telat = $start->diff($end)->days;
     }
 
-    // ================= DENDA =================
+    
     $denda_per_hari = 100000;
     $denda = $telat * $denda_per_hari;
 
-    // ================= UPDATE TRANSAKSI =================
+    
     $transaksiModel->update($id, [
         'tgl_kembali' => $tgl_kembali_real,
         'status_sewa' => 'Selesai',
         'denda' => $denda
     ]);
 
-    // ================= UPDATE KENDARAAN =================
+   
     $kendaraanModel->update($transaksi['id_kendaraan'], [
         'status' => 'tersedia'
     ]);
@@ -413,7 +492,6 @@ public function prosesKembalikan($id)
 
     $denda = $telat * 100000;
 
-    // ❗ VALIDASI BAYAR DENDA
     $bayar = (int)$this->request->getPost('bayar_denda');
 
     if ($denda > 0) {

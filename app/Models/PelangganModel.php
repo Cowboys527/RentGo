@@ -11,6 +11,9 @@ class PelangganModel extends Model
     protected $allowedFields = [
         'nama',
         'no_hp',
-        'alamat'
+        'alamat',
+        'nik',
+        'foto_ktp',
+        'foto_sim'
     ];
 }

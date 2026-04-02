@@ -1,0 +1,352 @@
+/* ═══════════════════════════════════════
+   detail.css — Detail Transaksi
+   Letakkan di: public/css/transaksi/detail.css
+═══════════════════════════════════════ */
+
+/* ════════════════════════════
+   PAGE HEADER
+════════════════════════════ */
+.page-header {
+    margin-bottom: 28px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.page-subtitle {
+    font-size: 14px;
+    color: var(--subtext);
+    font-weight: 400;
+}
+
+/* ════════════════════════════
+   DETAIL WRAPPER
+════════════════════════════ */
+.detail-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* ════════════════════════════
+   FORM SECTION (Card)
+════════════════════════════ */
+.form-section {
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e0e0e0;
+    padding: 28px;
+}
+
+/* Section Title */
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.section-title h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+}
+
+/* Section Icons */
+.section-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.section-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: white;
+}
+
+.section-icon-blue   { background: #1976d2; }
+.section-icon-orange { background: #ff9800; }
+.section-icon-green  { background: #00c853; }
+
+/* ════════════════════════════
+   INFO GRID (Detail Rows)
+════════════════════════════ */
+.info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.info-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--subtext);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    flex-shrink: 0;
+}
+
+.info-value {
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 500;
+    text-align: right;
+}
+
+.info-value-strong {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    color: #1565c0;
+}
+
+.info-value-sisa {
+    color: #e68900;
+    font-weight: 700;
+}
+
+/* ════════════════════════════
+   STATUS BADGE
+════════════════════════════ */
+.status-badge {
+    display: inline-block;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-lunas {
+    background: rgba(0, 200, 83, 0.12);
+    color: #00a844;
+}
+
+.badge-dp {
+    background: rgba(255, 152, 0, 0.13);
+    color: #e68900;
+}
+
+.badge-belum {
+    background: rgba(231, 76, 60, 0.11);
+    color: #c0392b;
+}
+
+/* ════════════════════════════
+   FORM INPUT (Bayar Sisa)
+════════════════════════════ */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 24px;
+}
+
+.form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--subtext);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.input-prefix-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-prefix {
+    position: absolute;
+    left: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #757575;
+    pointer-events: none;
+}
+
+.form-input {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--text);
+    background: white;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.input-with-prefix {
+    padding-left: 42px;
+}
+
+.form-input:focus {
+    border-color: #1976d2;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.08);
+}
+
+.form-input::placeholder {
+    color: #bdbdbd;
+}
+
+/* ════════════════════════════
+   LUNAS BOX
+════════════════════════════ */
+.lunas-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0, 200, 83, 0.08);
+    border: 1px solid rgba(0, 200, 83, 0.25);
+    border-radius: 12px;
+    padding: 16px 20px;
+    color: #00a844;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.lunas-box svg {
+    fill: #00a844;
+    flex-shrink: 0;
+}
+
+/* ════════════════════════════
+   ACTION BUTTONS
+════════════════════════════ */
+.form-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    background: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-submit:hover {
+    background: #1565c0;
+}
+
+.btn-struk {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: #00c853;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-struk:hover {
+    background: #00a844;
+}
+
+/* ════════════════════════════
+   BACK BUTTON
+════════════════════════════ */
+.back-action {
+    padding-bottom: 8px;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    background: white;
+    color: #555;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-back:hover {
+    background: #f5f5f5;
+}
+
+/* ════════════════════════════
+   RESPONSIVE
+════════════════════════════ */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 22px;
+    }
+
+    .form-section {
+        padding: 20px;
+    }
+
+    .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .info-value {
+        text-align: left;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn-submit,
+    .btn-struk,
+    .btn-back {
+        justify-content: center;
+        width: 100%;
+    }
+}
