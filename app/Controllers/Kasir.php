@@ -13,6 +13,8 @@ class Kasir extends BaseController
     
     public function dashboard()
 {
+    $this->autoUpdateStatus();
+
     if (!session()->get('logged_in') || session()->get('role') != 'kasir') {
         return redirect()->to('/login');
     }
@@ -57,6 +59,8 @@ class Kasir extends BaseController
     
     public function transaksi()
 {
+    $this->autoUpdateStatus();
+
     if (!session()->get('logged_in') || session()->get('role') != 'kasir') {
         return redirect()->to('/login');
     }
@@ -294,6 +298,8 @@ public function detail($id)
             p.nik AS nik_pelanggan,
             p.foto_ktp AS foto_ktp_pelanggan,
             p.foto_sim AS foto_sim_pelanggan,
+            p.no_hp,
+            p.alamat,
             k.nama_kendaraan
         ')
         ->join('pelanggan p', 'p.id_pelanggan = t.id_pelanggan')
@@ -534,6 +540,29 @@ public function batalPembayaran()
 
     return redirect()->to('/kasir/transaksi')
         ->with('success', 'Transaksi dibatalkan');
+}
+
+
+private function autoUpdateStatus()
+{
+    $transaksiModel = new \App\Models\TransaksiModel();
+
+    $today = date('Y-m-d');
+
+    // Ambil transaksi yang masih berlangsung
+    $transaksi = $transaksiModel
+        ->whereIn('status_sewa', ['Berlangsung', 'Terlambat'])
+        ->findAll();
+
+    foreach ($transaksi as $t) {
+
+    if ($today > $t['tgl_kembali_rencana'] && $t['status_sewa'] != 'Selesai') {
+
+        $transaksiModel->update($t['id_transaksi'], [
+            'status_sewa' => 'Terlambat'
+        ]);
+    }
+}
 }
 
 }

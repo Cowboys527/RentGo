@@ -295,6 +295,7 @@
 ════════════════════════════ */
 .back-action {
     padding-bottom: 8px;
+    margin-top: 8px; 
 }
 
 .btn-back {
@@ -302,9 +303,9 @@
     align-items: center;
     gap: 8px;
     padding: 11px 22px;
-    background: white;
-    color: #555;
-    border: 1px solid #e0e0e0;
+    background: #ff9800; /* ← ubah jadi orange */
+    color: white;        /* ← ubah jadi putih */
+    border: none;        /* ← hapus border */
     border-radius: 10px;
     font-size: 14px;
     font-weight: 600;
@@ -313,7 +314,7 @@
 }
 
 .btn-back:hover {
-    background: #f5f5f5;
+    background: #e68900; /* ← hover lebih gelap */
 }
 
 /* ════════════════════════════

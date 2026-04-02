@@ -28,6 +28,16 @@
             </div>
 
             <div class="info-row">
+    <span class="info-label">No HP</span>
+    <span class="info-value"><?= $t['no_hp'] ?></span>
+</div>
+
+<div class="info-row">
+    <span class="info-label">Alamat</span>
+    <span class="info-value"><?= $t['alamat'] ?></span>
+</div>
+
+            <div class="info-row">
                 <span class="info-label">NIK</span>
                 <span class="info-value"><?= $t['nik_pelanggan'] ?? '-' ?></span>
             </div>

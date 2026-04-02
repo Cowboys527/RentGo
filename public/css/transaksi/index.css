@@ -1,11 +1,3 @@
-/* ═══════════════════════════════════════
-   index.css — Daftar Transaksi Kasir
-   Letakkan di: public/css/transaksi/index.css
-═══════════════════════════════════════ */
-
-/* ════════════════════════════
-   PAGE HEADER
-════════════════════════════ */
 .page-header {
     display: flex;
     align-items: center;
@@ -210,9 +202,11 @@
     border-bottom: none;
 }
 
-/* ════════════════════════════
-   BADGE ID
-════════════════════════════ */
+.data-table th:last-child {
+    text-align: center;
+}
+
+
 .badge-id {
     display: inline-block;
     padding: 4px 10px;
@@ -224,9 +218,7 @@
     font-family: 'Courier New', monospace;
 }
 
-/* ════════════════════════════
-   STATUS BADGES
-════════════════════════════ */
+
 .status-badge {
     display: inline-block;
     padding: 5px 12px;
@@ -262,9 +254,13 @@
     color: #00a844;
 }
 
-/* ════════════════════════════
-   AKSI BUTTONS
-════════════════════════════ */
+/* Status Telat */
+.badge-telat {
+    background: #ff4d4f;
+    color: white;
+}
+
+
 .aksi-cell {
     display: flex;
     align-items: center;
@@ -318,9 +314,7 @@
     font-weight: 600;
 }
 
-/* ════════════════════════════
-   EMPTY STATE
-════════════════════════════ */
+
 .empty-state {
     text-align: center;
     padding: 48px 20px;
@@ -329,15 +323,13 @@
     font-size: 14px;
 }
 
-/* ════════════════════════════
-   PAGER
-════════════════════════════ */
+
 .pager-wrapper {
     margin-top: 20px;
     padding: 4px 0;
 }
 
-/* Style bawaan CI4 pager agar matching */
+
 .pager-wrapper ul {
     list-style: none;
     display: flex;
