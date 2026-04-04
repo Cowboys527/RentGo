@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-
-
 use App\Models\TransaksiModel;
 use App\Models\KendaraanModel;
 use App\Models\PelangganModel;
@@ -222,9 +220,10 @@ public function pembayaran()
 }
 
 
-
 public function prosesPembayaran()
 {
+     helper('log');
+     
     $transaksiModel = new \App\Models\TransaksiModel();
     $kendaraanModel = new \App\Models\KendaraanModel();
 
@@ -272,6 +271,9 @@ public function prosesPembayaran()
         'status_sewa' => 'Berlangsung'
     ]);
 
+    $idTransaksi = $transaksiModel->insertID();
+    log_activity('Menambahkan transaksi ID: ' . $idTransaksi);
+
     
     $kendaraanModel->update($data['id_kendaraan'], [
         'status' => 'disewa'
@@ -314,7 +316,7 @@ public function detail($id)
 }
 
 public function bayarSisa($id)
-{
+{     
     $transaksiModel = new \App\Models\TransaksiModel();
 
     $transaksi = $transaksiModel->find($id);
@@ -339,6 +341,9 @@ public function bayarSisa($id)
         'sisa_bayar' => $sisa_baru,
         'status_bayar' => $status
     ]);
+
+    helper('log');
+    log_activity('Bayar sisa transaksi ID: ' . $id);
 
     return redirect()->to('/kasir/transaksi')
         ->with('success', 'Pembayaran berhasil diperbarui');
@@ -522,6 +527,9 @@ public function prosesKembalikan($id)
         'denda' => $denda
     ]);
 
+    helper('log');
+    log_activity('Pengembalian kendaraan transaksi ID: ' . $id);
+
     // UPDATE KENDARAAN
     $kendaraanModel->update($transaksi['id_kendaraan'], [
         'status' => 'tersedia'
@@ -536,6 +544,9 @@ public function prosesKembalikan($id)
 
 public function batalPembayaran()
 {
+     helper('log');
+     log_activity('Membatalkan transaksi');
+
     session()->remove('transaksi_temp');
 
     return redirect()->to('/kasir/transaksi')

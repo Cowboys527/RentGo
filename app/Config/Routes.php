@@ -63,4 +63,7 @@ $routes->group('kasir', function($routes){
 // ================= OWNER =================
 $routes->group('owner', function($routes){
     $routes->get('dashboard', 'Owner::dashboard');
+    $routes->get('laporan', 'Owner::laporan');
+    $routes->get('laporan/export', 'Owner::export');
+    $routes->get('log', 'Owner::logActivity');
 });
