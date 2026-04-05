@@ -113,4 +113,9 @@
     </table>
 </div>
 
+<!-- PAGINATION -->
+<div class="pager-wrapper">
+    <?= $pager->links() ?>
+</div>
+
 <?= $this->endSection() ?>

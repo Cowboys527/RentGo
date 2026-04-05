@@ -90,36 +90,50 @@ class Owner extends BaseController
     $dari   = $this->request->getGet('dari');
     $sampai = $this->request->getGet('sampai');
 
-    $builder = $transaksiModel
-        ->select('
-            transaksi.*,
-            pelanggan.nama AS nama_pelanggan,
-            kendaraan.nama_kendaraan
-        ')
-        ->join('pelanggan', 'pelanggan.id_pelanggan = transaksi.id_pelanggan')
-        ->join('kendaraan', 'kendaraan.id_kendaraan = transaksi.id_kendaraan');
+    // ===== BASE QUERY FUNCTION =====
+    $applyFilter = function($builder) use ($filter, $dari, $sampai) {
+        $builder->select('
+                transaksi.*,
+                pelanggan.nama AS nama_pelanggan,
+                kendaraan.nama_kendaraan
+            ')
+            ->join('pelanggan', 'pelanggan.id_pelanggan = transaksi.id_pelanggan')
+            ->join('kendaraan', 'kendaraan.id_kendaraan = transaksi.id_kendaraan');
 
-    // PRIORITAS: FILTER TANGGAL CUSTOM
-    if ($dari && $sampai) {
-        $builder->where('tgl_sewa >=', $dari)
-                ->where('tgl_sewa <=', $sampai);
-    } else {
-        if ($filter == 'harian') {
-            $builder->where('tgl_sewa', date('Y-m-d'));
-        } elseif ($filter == 'bulanan') {
-            $builder->where('MONTH(tgl_sewa)', date('m'));
-        } elseif ($filter == 'tahunan') {
-            $builder->where('YEAR(tgl_sewa)', date('Y'));
+        if ($dari && $sampai) {
+            $builder->where('tgl_sewa >=', $dari)
+                    ->where('tgl_sewa <=', $sampai);
+        } else {
+            if ($filter == 'harian') {
+                $builder->where('tgl_sewa', date('Y-m-d'));
+            } elseif ($filter == 'bulanan') {
+                $builder->where('MONTH(tgl_sewa)', date('m'));
+            } elseif ($filter == 'tahunan') {
+                $builder->where('YEAR(tgl_sewa)', date('Y'));
+            }
         }
-    }
 
-    $data = $builder->findAll();
+        return $builder;
+    };
+
+    // ===== SUMMARY (semua data, tidak terpotong) =====
+    $allData = $applyFilter(new TransaksiModel())->findAll();
+
+    $totalTransaksi  = count($allData);
+    $totalPendapatan = array_sum(array_column($allData, 'total_bayar'));
+    $kendaraanDisewa = count(array_unique(array_column($allData, 'id_kendaraan')));
+
+    // ===== TABEL (paginate) =====
+    $transaksiPaged = new TransaksiModel();
+    $applyFilter($transaksiPaged);
+    $transaksi = $transaksiPaged->paginate(10);
 
     return view('owner/laporan/index', [
-        'transaksi' => $data,
-        'totalTransaksi' => count($data),
-        'totalPendapatan' => array_sum(array_column($data, 'total_bayar')),
-        'kendaraanDisewa' => count(array_unique(array_column($data, 'id_kendaraan')))
+        'transaksi'       => $transaksi,
+        'pager'           => $transaksiPaged->pager,
+        'totalTransaksi'  => $totalTransaksi,
+        'totalPendapatan' => $totalPendapatan,
+        'kendaraanDisewa' => $kendaraanDisewa,
     ]);
 }
 

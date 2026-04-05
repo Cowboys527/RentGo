@@ -44,7 +44,7 @@
                     <circle cx="140" cy="100" r="8" fill="#78909C"/>
                 </svg>
 
-                <button class="phone-btn">Rent</button>
+                <button class="phone-btn">RentGo</button>
             </div>
         </div>
 
