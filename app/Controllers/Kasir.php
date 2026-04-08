@@ -238,8 +238,7 @@ public function prosesPembayaran()
 
     // LOGIC STATUS
     if ($uang == 0) {
-        $status = 'Belum Bayar';
-        $dp = 0;
+        return redirect()->back()->with('error', 'Uang harus lebih dari 0');
     } elseif ($uang < $total) {
         $status = 'DP';
         $dp = $uang;
@@ -481,7 +480,6 @@ public function prosesKembalikan($id)
         return redirect()->back()->with('error', 'Data tidak ditemukan');
     }
 
-    // ❗ VALIDASI
     if ($transaksi['status_sewa'] == 'Selesai') {
         return redirect()->back()->with('error', 'Sudah dikembalikan!');
     }
@@ -490,10 +488,15 @@ public function prosesKembalikan($id)
         return redirect()->back()->with('error', 'Belum lunas!');
     }
 
+    $today = date('Y-m-d');
+    if ($today < $transaksi['tgl_kembali_rencana']) {
+    return redirect()->back()->with('error', 'Belum bisa dikembalikan! Tanggal kembali rencana: ' . $transaksi['tgl_kembali_rencana']);
+    }
+
     $tgl_kembali = date('Y-m-d');
     $rencana = $transaksi['tgl_kembali_rencana'];
 
-    // HITUNG TELAT
+    
     $telat = 0;
     if ($tgl_kembali > $rencana) {
         $start = new \DateTime($rencana);

@@ -93,12 +93,21 @@
                 </div>
             <?php endif; ?>
 
-            <div class="form-actions">
-                <button type="submit" class="btn-konfirmasi">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                    Konfirmasi Pengembalian
-                </button>
-            </div>
+            <?php $bolehKembali = date('Y-m-d') >= $t['tgl_kembali_rencana']; ?>
+
+<div class="form-actions">
+    <?php if($bolehKembali): ?>
+        <button type="submit" class="btn-konfirmasi">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            Konfirmasi Pengembalian
+        </button>
+    <?php else: ?>
+        <div class="nodenda-box" style="background: rgba(231,76,60,0.08); border-color: rgba(231,76,60,0.25); color: #c0392b;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+            <span>Pengembalian belum bisa dilakukan. Tanggal kembali rencana: <b><?= $t['tgl_kembali_rencana'] ?></b></span>
+        </div>
+    <?php endif; ?>
+</div>
 
         </form>
     </div>

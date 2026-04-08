@@ -1,11 +1,3 @@
-/* ═══════════════════════════════════════
-   tambah.css — Form Tambah Transaksi
-   Letakkan di: public/css/transaksi/tambah.css
-═══════════════════════════════════════ */
-
-/* ════════════════════════════
-   PAGE HEADER
-════════════════════════════ */
 .page-header {
     margin-bottom: 28px;
     max-width: 800px; 
@@ -108,9 +100,6 @@
     margin-bottom: 0;
 }
 
-/* ════════════════════════════
-   FORM LABELS & INPUTS
-════════════════════════════ */
 .form-label {
     font-size: 13px;
     font-weight: 600;
@@ -144,6 +133,22 @@
 .form-select {
     cursor: pointer;
     appearance: auto;
+
+    background: #f0f7ff; /* biru muda */
+    border: 1px solid rgba(25, 118, 210, 0.3);
+    color: #1565c0;
+    font-weight: 500;
+}
+
+.form-select:hover {
+    background: #e3f2fd;
+    border-color: #1976d2;
+}
+
+/* efek focus */
+.form-select:focus {
+    border-color: #1976d2;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15);
 }
 
 /* Readonly fields */
@@ -249,6 +254,102 @@
 
 .btn-back:hover {
     background: #e68900; 
+}
+
+ /* ================= OVERLAY FULL SCREEN ================= */
+.overlay-kendaraan {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+
+    display: none;
+    z-index: 9999;
+}
+
+/* aktif */
+.overlay-kendaraan.show {
+    display: block;
+}
+
+/* isi overlay */
+.overlay-content {
+    background: white;
+    width: 90%;
+    max-width: 1100px;
+    height: 90%;
+    margin: 30px auto;
+    border-radius: 16px;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* header */
+.overlay-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.overlay-header h2 {
+    font-size: 20px;
+}
+
+.overlay-header button {
+    background: red;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* GRID */
+.grid-kendaraan {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+    gap: 15px;
+    overflow-y: auto;
+}
+
+/* CARD */
+.card-kendaraan {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    padding: 10px;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.card-kendaraan:hover {
+    transform: none;
+}
+
+/* IMAGE */
+.card-kendaraan img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* BUTTON */
+.btn-pilih {
+    margin-top: 8px;
+    background: #1976d2;
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 /* ════════════════════════════

@@ -38,7 +38,6 @@
     <!-- STATUS BAYAR -->
     <select name="status_bayar" class="filter-select">
         <option value="">-- Status Bayar --</option>
-        <option value="Belum Bayar" <?= (($_GET['status_bayar'] ?? '')=='Belum Bayar')?'selected':'' ?>>Belum Bayar</option>
         <option value="DP" <?= (($_GET['status_bayar'] ?? '')=='DP')?'selected':'' ?>>DP</option>
         <option value="Lunas" <?= (($_GET['status_bayar'] ?? '')=='Lunas')?'selected':'' ?>>Lunas</option>
     </select>
@@ -99,7 +98,7 @@
 
             <!-- STATUS BAYAR -->
             <td>
-                <span class="status-badge <?= $t['status_bayar']=='Lunas' ? 'badge-lunas' : ($t['status_bayar']=='DP' ? 'badge-dp' : 'badge-belum') ?>">
+                <span class="status-badge <?= $t['status_bayar']=='Lunas' ? 'badge-lunas' : 'badge-dp' ?>">
                     <?= $t['status_bayar'] ?>
                 </span>
             </td>

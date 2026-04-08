@@ -29,10 +29,6 @@
         <!-- Info Keterangan -->
         <div class="info-box">
             <div class="info-item">
-                <span class="info-dot dot-red"></span>
-                <span><strong>0</strong> = Belum Bayar</span>
-            </div>
-            <div class="info-item">
                 <span class="info-dot dot-orange"></span>
                 <span><strong>Kurang dari total</strong> = DP</span>
             </div>

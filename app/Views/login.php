@@ -118,9 +118,6 @@
             </div>
 
             <button type="submit" class="btn-submit">Login</button>
-            <div class="back-link">
-              <a href="<?= base_url('/') ?>">← Keluar</a>
-            </div>
 
         </form>
 

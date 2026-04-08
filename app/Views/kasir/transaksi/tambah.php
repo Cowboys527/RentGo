@@ -76,18 +76,15 @@
         <div class="form-row">
             <div class="form-group">
                 <label class="form-label">Pilih Kendaraan</label>
-                <select name="id_kendaraan" id="kendaraan" class="form-input form-select" required>
-                    <option value="">-- Pilih Kendaraan --</option>
-                    <?php foreach ($kendaraan as $k): ?>
-                    <option 
-                        value="<?= $k['id_kendaraan'] ?>"
-                        data-harga="<?= $k['harga_sewa'] ?>"
-                        data-status="<?= $k['status'] ?>"
-                    >
-                    <?= $k['nama_kendaraan'] ?> - Rp <?= number_format($k['harga_sewa']) ?>/hari
-                    </option>
-                    <?php endforeach; ?>
-                </select>
+                <div class="form-group">
+
+             <input type="hidden" name="id_kendaraan" id="id_kendaraan" required>
+
+            <div id="openKendaraan" class="form-input form-select">
+             Klik untuk pilih kendaraan
+            </div>
+           </div>
+           
             </div>
             <div class="form-group">
                 <label class="form-label">Status Kendaraan</label>
@@ -155,11 +152,48 @@
 
 </form>
 
+<!-- ================= OVERLAY KENDARAAN ================= -->
+<div id="overlayKendaraan" class="overlay-kendaraan">
+
+    <div class="overlay-content">
+
+        <div class="overlay-header">
+            <h2>Pilih Kendaraan</h2>
+            <button onclick="closeOverlay()">✕</button>
+        </div>
+
+        <div class="grid-kendaraan">
+            <?php foreach ($kendaraan as $k): ?>
+            <div class="card-kendaraan"
+                data-id="<?= $k['id_kendaraan'] ?>"
+                data-nama="<?= $k['nama_kendaraan'] ?>"
+                data-harga="<?= $k['harga_sewa'] ?>"
+                data-status="<?= $k['status'] ?>"
+            >
+
+                <img src="<?= base_url('uploads/kendaraan/'.$k['foto']) ?>">
+
+                <h4><?= $k['nama_kendaraan'] ?></h4>
+                <p>Rp <?= number_format($k['harga_sewa']) ?>/hari</p>
+
+                <button type="button" class="btn-pilih">Pilih</button>
+
+            </div>
+            <?php endforeach; ?>
+        </div>
+
+    </div>
+</div>                                                                                  
+
 <!-- ================= JAVASCRIPT ================= -->
 <script>
-const kendaraan = document.getElementById('kendaraan');
+const overlay = document.getElementById('overlayKendaraan');
+const openBtn = document.getElementById('openKendaraan');
+const idInput = document.getElementById('id_kendaraan');
+
 const status = document.getElementById('status');
 const harga = document.getElementById('harga');
+
 const tglSewa = document.querySelector('[name="tgl_sewa"]');
 const tglKembali = document.querySelector('[name="tgl_kembali"]');
 const lama = document.getElementById('lama_sewa');
@@ -167,36 +201,53 @@ const total = document.getElementById('total');
 
 let hargaPerHari = 0;
 
-// Saat pilih kendaraan
-kendaraan.addEventListener('change', function() {
-    const selected = this.options[this.selectedIndex];
-
-    status.value = selected.getAttribute('data-status');
-    hargaPerHari = selected.getAttribute('data-harga');
-
-    harga.value = "Rp " + parseInt(hargaPerHari).toLocaleString();
-
-    hitungTotal();
+// ================= OPEN OVERLAY =================
+openBtn.addEventListener('click', () => {
+    overlay.classList.add('show');
 });
 
-// Hitung lama sewa
+// ================= CLOSE =================
+function closeOverlay() {
+    overlay.classList.remove('show');
+}
+
+// ================= PILIH KENDARAAN =================
+document.querySelectorAll('.card-kendaraan').forEach(card => {
+    card.addEventListener('click', function() {
+
+        const id = this.dataset.id;
+        const nama = this.dataset.nama;
+        const hargaData = this.dataset.harga;
+        const statusData = this.dataset.status;
+
+        // isi ke form
+        idInput.value = id;
+        openBtn.innerText = nama;
+
+        status.value = statusData;
+        hargaPerHari = hargaData;
+        harga.value = "Rp " + parseInt(hargaData).toLocaleString();
+
+        closeOverlay();
+        hitungTotal();
+    });
+});
+
+// ================= HITUNG =================
 function hitungHari() {
     if (tglSewa.value && tglKembali.value) {
         const start = new Date(tglSewa.value);
         const end = new Date(tglKembali.value);
 
         let selisih = (end - start) / (1000 * 60 * 60 * 24);
-
         if (selisih <= 0) selisih = 1;
 
         lama.value = selisih;
-
         return selisih;
     }
     return 0;
 }
 
-// Hitung total bayar
 function hitungTotal() {
     const hari = hitungHari();
 
@@ -206,7 +257,6 @@ function hitungTotal() {
     }
 }
 
-// Event perubahan tanggal
 tglSewa.addEventListener('change', hitungTotal);
 tglKembali.addEventListener('change', hitungTotal);
 </script>
