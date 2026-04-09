@@ -3,6 +3,8 @@
 
 <link rel="stylesheet" href="<?= base_url('css/transaksi/pembayaran.css') ?>">
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <!-- Page Header -->
 <div class="page-header">
     <h2 class="page-title">Pembayaran Rental</h2>
@@ -52,13 +54,13 @@
             <div class="alert alert-error"><?= session()->getFlashdata('error') ?></div>
         <?php endif; ?>
 
-        <form method="post" action="<?= base_url('kasir/transaksi/proses') ?>">
+       <form id="formPembayaran">
 
             <div class="form-group">
                 <label class="form-label">Uang Bayar</label>
                 <div class="input-prefix-wrapper">
                     <span class="input-prefix">Rp</span>
-                    <input type="number" name="uang" class="form-input input-with-prefix" placeholder="0" required>
+                    <input type="number" id="uangInput" name="uang" class="form-input input-with-prefix" placeholder="0" required>
                 </div>
             </div>
 
@@ -81,5 +83,91 @@
     </div>
 
 </div>
+
+<script>
+const form = document.getElementById('formPembayaran');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    let uang = parseInt(document.getElementById('uangInput').value) || 0;
+    let total = <?= $total ?>;
+
+    if (uang <= 0) {
+        alert("Uang harus lebih dari 0!");
+        return;
+    }
+
+   
+    if (uang < total) {
+        submitPembayaran();
+    } 
+    else {
+        showCetakPopup();
+    }
+});
+
+function submitPembayaran(callback = null) {
+    let formData = new FormData(form);
+
+    fetch("<?= base_url('kasir/transaksi/proses') ?>", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(res => {
+
+        if (res.status === 'error') {
+            alert(res.message);
+            return;
+        }
+
+        if (res.tipe === 'DP') {
+    Swal.fire({
+        title: 'Pembayaran DP Berhasil!',
+        text: 'Sisa pembayaran dapat dilunasi nanti.',
+        icon: 'success',
+        confirmButtonColor: '#1976d2',
+        confirmButtonText: 'Oke'
+    }).then(() => {
+        window.location.href = "<?= base_url('kasir/transaksi') ?>";
+    });
+}
+
+        if (res.tipe === 'Lunas') {
+            if (callback) {
+                callback(res.id);
+            }
+        }
+    });
+}
+
+function showCetakPopup() {
+    Swal.fire({
+        title: 'Pembayaran Lunas!',
+        text: 'Apakah ingin mencetak struk sekarang?',
+        icon: 'success',
+        showCancelButton: true,
+        confirmButtonColor: '#1976d2',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Cetak Struk',
+        cancelButtonText: 'Tidak Sekarang',
+        reverseButtons: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            submitPembayaran(function(id) {
+                window.open("<?= base_url('kasir/transaksi/struk/') ?>" + id, "_blank");
+                setTimeout(() => {
+                    window.location.href = "<?= base_url('kasir/transaksi') ?>";
+                }, 500);
+            });
+        } else {
+            submitPembayaran(function(id) {
+                window.location.href = "<?= base_url('kasir/transaksi') ?>";
+            });
+        }
+    });
+}
+</script>
 
 <?= $this->endSection() ?>

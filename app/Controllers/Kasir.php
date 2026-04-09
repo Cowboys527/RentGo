@@ -222,24 +222,27 @@ public function pembayaran()
 
 public function prosesPembayaran()
 {
-     helper('log');
-     
     $transaksiModel = new \App\Models\TransaksiModel();
     $kendaraanModel = new \App\Models\KendaraanModel();
 
     $data = session()->get('transaksi_temp');
 
     if (!$data) {
-        return redirect()->to('/kasir/transaksi');
+        return $this->response->setJSON(['status' => 'error']);
     }
 
     $uang = (int)$this->request->getPost('uang');
     $total = $data['total_bayar'];
 
-    // LOGIC STATUS
-    if ($uang == 0) {
-        return redirect()->back()->with('error', 'Uang harus lebih dari 0');
-    } elseif ($uang < $total) {
+    if ($uang <= 0) {
+        return $this->response->setJSON([
+            'status' => 'error',
+            'message' => 'Uang harus lebih dari 0'
+        ]);
+    }
+
+    // LOGIC
+    if ($uang < $total) {
         $status = 'DP';
         $dp = $uang;
     } else {
@@ -247,15 +250,10 @@ public function prosesPembayaran()
         $dp = $uang;
     }
 
-    $sisa = $total - $dp;
-    if ($sisa < 0) $sisa = 0;
+    $sisa = max(0, $total - $dp);
+    $kembalian = max(0, $uang - $total);
 
-    $kembalian = 0;
-    if ($uang > $total) {
-        $kembalian = $uang - $total;
-    }
-
-    // SIMPAN TRANSAKSI
+    // SIMPAN
     $transaksiModel->insert([
         'id_user' => session()->get('id_user'),
         'id_pelanggan' => $data['id_pelanggan'],
@@ -271,21 +269,19 @@ public function prosesPembayaran()
     ]);
 
     $idTransaksi = $transaksiModel->insertID();
-    log_activity('Menambahkan transaksi ID: ' . $idTransaksi);
 
-    
     $kendaraanModel->update($data['id_kendaraan'], [
         'status' => 'disewa'
     ]);
 
     session()->remove('transaksi_temp');
 
-    return redirect()->to('/kasir/transaksi')
-        ->with('success', 
-            'Status: '.$status.
-            ' | Sisa: Rp '.number_format($sisa).
-            ' | Kembalian: Rp '.number_format($kembalian)
-        );
+    return $this->response->setJSON([
+        'status' => 'success',
+        'tipe' => $status,
+        'id' => $idTransaksi,
+        'kembalian' => $kembalian
+    ]);
 }
 
 public function detail($id)
