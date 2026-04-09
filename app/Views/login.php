@@ -15,12 +15,6 @@
 </head>
 <body>
 
-    <!-- Background -->
-    <div class="sun"></div>
-    <div class="cloud cloud-1"><div class="cloud-shape"></div></div>
-    <div class="cloud cloud-2"><div class="cloud-shape"></div></div>
-    <div class="cloud cloud-3"><div class="cloud-shape"></div></div>
-
    <div class="login-container">
 
     <!-- LEFT SIDE -->
