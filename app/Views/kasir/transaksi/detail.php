@@ -95,6 +95,27 @@
                 <span class="info-label">Kendaraan</span>
                 <span class="info-value"><?= $t['nama_kendaraan'] ?></span>
             </div>
+
+           <div class="info-row">
+    <span class="info-label">Tanggal Sewa</span>
+    <span class="info-value">
+        <?= date('d-m-Y', strtotime($t['tgl_sewa'])) ?>
+    </span>
+</div>
+
+<div class="info-row">
+    <span class="info-label">Jam Ambil</span>
+    <span class="info-value">
+        <?= $t['jam_sewa'] ?? '-' ?>
+    </span>
+</div>
+
+<div class="info-row">
+    <span class="info-label">Tanggal Kembali</span>
+    <span class="info-value">
+        <?= date('d-m-Y', strtotime($t['tgl_kembali_rencana'])) ?>
+    </span>
+</div>
             <div class="info-row">
                 <span class="info-label">Total Bayar</span>
                 <span class="info-value info-value-strong">Rp <?= number_format($t['total_bayar']) ?></span>

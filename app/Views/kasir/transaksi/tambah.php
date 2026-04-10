@@ -108,16 +108,21 @@
         </div>
 
         <div class="form-row">
-            <div class="form-group">
-                <label class="form-label">Tanggal Sewa</label>
-                <input type="date" name="tgl_sewa" class="form-input" required>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Tanggal Kembali</label>
-                <input type="date" name="tgl_kembali" class="form-input" required>
-            </div>
-        </div>
+    <div class="form-group">
+        <label class="form-label">Tanggal Sewa</label>
+        <input type="date" name="tgl_sewa" class="form-input" required>
+    </div>
 
+    <div class="form-group">
+        <label class="form-label">Tanggal Kembali</label>
+        <input type="date" name="tgl_kembali" class="form-input" required>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Jam Ambil</label>
+        <input type="time" name="jam_sewa" id="jam_sewa" class="form-input" required>
+    </div>
+</div>
         <div class="form-group">
             <label class="form-label">Lama Sewa (Hari)</label>
             <input type="text" id="lama_sewa" class="form-input form-readonly" readonly placeholder="0 hari">
@@ -198,29 +203,33 @@ const tglSewa = document.querySelector('[name="tgl_sewa"]');
 const tglKembali = document.querySelector('[name="tgl_kembali"]');
 const lama = document.getElementById('lama_sewa');
 const total = document.getElementById('total');
+const jamSewa = document.getElementById('jam_sewa');
 
 let hargaPerHari = 0;
 
-// ================= OPEN OVERLAY =================
+// ← pindah ke sini, setelah semua variabel dideklarasikan
+const today = new Date().toISOString().split('T')[0];
+tglSewa.setAttribute('min', today);
+tglKembali.setAttribute('min', today);
+
+// OPEN OVERLAY
 openBtn.addEventListener('click', () => {
     overlay.classList.add('show');
 });
 
-// ================= CLOSE =================
+// CLOSE
 function closeOverlay() {
     overlay.classList.remove('show');
 }
 
-// ================= PILIH KENDARAAN =================
+// PILIH KENDARAAN
 document.querySelectorAll('.card-kendaraan').forEach(card => {
     card.addEventListener('click', function() {
-
         const id = this.dataset.id;
         const nama = this.dataset.nama;
         const hargaData = this.dataset.harga;
         const statusData = this.dataset.status;
 
-        // isi ke form
         idInput.value = id;
         openBtn.innerText = nama;
 
@@ -233,16 +242,18 @@ document.querySelectorAll('.card-kendaraan').forEach(card => {
     });
 });
 
-// ================= HITUNG =================
+// HITUNG
 function hitungHari() {
     if (tglSewa.value && tglKembali.value) {
         const start = new Date(tglSewa.value);
         const end = new Date(tglKembali.value);
 
         let selisih = (end - start) / (1000 * 60 * 60 * 24);
+        selisih = Math.ceil(selisih);
+
         if (selisih <= 0) selisih = 1;
 
-        lama.value = selisih;
+        lama.value = selisih + " hari";
         return selisih;
     }
     return 0;
@@ -257,7 +268,12 @@ function hitungTotal() {
     }
 }
 
-tglSewa.addEventListener('change', hitungTotal);
+// Tanggal kembali minimum ikuti tanggal sewa
+tglSewa.addEventListener('change', function() {
+    tglKembali.setAttribute('min', this.value);
+    hitungTotal();
+});
+
 tglKembali.addEventListener('change', hitungTotal);
 </script>
 

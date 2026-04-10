@@ -26,13 +26,14 @@ body {
 
 <div class="line"></div>
 
-ID: <?= $t['id_transaksi'] ?><br>
-Tanggal: <?= date('d-m-Y') ?><br>
+Nama: <?= $t['nama'] ?><br>
+Kendaraan: <?= $t['nama_kendaraan'] ?><br>
 
 <div class="line"></div>
 
-Nama: <?= $t['nama'] ?><br>
-Kendaraan: <?= $t['nama_kendaraan'] ?><br>
+Sewa: <?= date('d-m-Y', strtotime($t['tgl_sewa'])) ?> <?= $t['jam_sewa'] ?><br>
+Kembali: <?= date('d-m-Y', strtotime($t['tgl_kembali_rencana'])) ?> <?= $t['jam_kembali'] ?><br>
+Durasi: <?= $t['lama_sewa'] ?> Hari<br>
 
 <div class="line"></div>
 

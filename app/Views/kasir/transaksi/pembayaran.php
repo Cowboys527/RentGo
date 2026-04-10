@@ -94,9 +94,14 @@ form.addEventListener('submit', function(e) {
     let total = <?= $total ?>;
 
     if (uang <= 0) {
-        alert("Uang harus lebih dari 0!");
-        return;
-    }
+    Swal.fire({
+        title: 'Input Tidak Valid',
+        text: 'Uang harus lebih dari 0!',
+        icon: 'warning',
+        confirmButtonColor: '#1976d2'
+    });
+    return;
+}
 
    
     if (uang < total) {
@@ -118,9 +123,14 @@ function submitPembayaran(callback = null) {
     .then(res => {
 
         if (res.status === 'error') {
-            alert(res.message);
-            return;
-        }
+    Swal.fire({
+        title: 'Error',
+        text: res.message,
+        icon: 'error',
+        confirmButtonColor: '#d33'
+    });
+    return;
+}
 
         if (res.tipe === 'DP') {
     Swal.fire({

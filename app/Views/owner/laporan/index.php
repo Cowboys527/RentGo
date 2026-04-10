@@ -40,7 +40,6 @@
 
 </form>
 
-<!-- SUMMARY CARDS -->
 <div class="summary-grid">
 
     <div class="summary-card">
@@ -60,7 +59,6 @@
 
 </div>
 
-<!-- TABEL -->
 <div class="table-card">
     <table class="data-table">
         <thead>
@@ -113,7 +111,6 @@
     </table>
 </div>
 
-<!-- PAGINATION -->
 <div class="pager-wrapper">
     <?= $pager->links() ?>
 </div>

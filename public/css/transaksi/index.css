@@ -333,15 +333,21 @@
 .pager-wrapper ul {
     list-style: none;
     display: flex;
+    align-items: center;
     gap: 6px;
     padding: 0;
     margin: 0;
+    flex-wrap: wrap;
 }
 
 .pager-wrapper ul li a,
 .pager-wrapper ul li span {
-    display: inline-block;
-    padding: 7px 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 14px;
     border-radius: 8px;
     font-size: 13px;
     font-weight: 600;
@@ -350,6 +356,7 @@
     text-decoration: none;
     background: white;
     transition: all 0.15s;
+    white-space: nowrap;
 }
 
 .pager-wrapper ul li a:hover {

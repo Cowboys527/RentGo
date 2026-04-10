@@ -127,6 +127,7 @@ public function simpanTransaksi()
     // ================= INPUT =================
     $id_kendaraan = $this->request->getPost('id_kendaraan');
     $nama         = $this->request->getPost('nama_pelanggan');
+    $jam_sewa    = $this->request->getPost('jam_sewa');
     $no_hp        = $this->request->getPost('no_hp');
     $alamat       = $this->request->getPost('alamat');
     $nik          = $this->request->getPost('nik');
@@ -166,12 +167,24 @@ if ($fileSim && $fileSim->isValid() && !$fileSim->hasMoved()) {
     return redirect()->back()->with('error', 'Upload SIM gagal');
 }
 
+if (empty($jam_sewa)) {
+    return redirect()->back()->with('error', 'Jam sewa wajib diisi');
+}
     
-    $start = new \DateTime($tgl_sewa);
-    $end   = new \DateTime($tgl_kembali);
+    // ================= HITUNG LAMA SEWA (PAKAI JAM) =================
+$start = new \DateTime($tgl_sewa . ' ' . $jam_sewa);
+$end   = new \DateTime($tgl_kembali . ' ' . $jam_sewa);
 
-    $lama_sewa = $start->diff($end)->days;
-    if ($lama_sewa <= 0) $lama_sewa = 1;
+// hitung selisih dalam jam
+$selisihJam = ($end->getTimestamp() - $start->getTimestamp()) / 3600;
+
+// konversi ke hari (dibulatkan ke atas)
+$lama_sewa = ceil($selisihJam / 24);
+
+// minimal 1 hari
+if ($lama_sewa <= 0) {
+    $lama_sewa = 1;
+}
 
     
     $pelangganModel->insert([
@@ -193,12 +206,13 @@ if ($fileSim && $fileSim->isValid() && !$fileSim->hasMoved()) {
 
     
     session()->set('transaksi_temp', [
-        'id_kendaraan' => $id_kendaraan,
-        'id_pelanggan' => $id_pelanggan,
-        'tgl_sewa'     => $tgl_sewa,
-        'tgl_kembali'  => $tgl_kembali,
-        'lama_sewa'    => $lama_sewa,
-        'total_bayar'  => $total
+    'id_kendaraan' => $id_kendaraan,
+    'id_pelanggan' => $id_pelanggan,
+    'tgl_sewa'     => $tgl_sewa,
+    'jam_sewa'     => $jam_sewa,
+    'tgl_kembali'  => $tgl_kembali,
+    'lama_sewa'    => $lama_sewa,
+    'total_bayar'  => $total
     ]);
 
     return redirect()->to('/kasir/transaksi/pembayaran');
@@ -254,19 +268,24 @@ public function prosesPembayaran()
     $kembalian = max(0, $uang - $total);
 
     // SIMPAN
-    $transaksiModel->insert([
-        'id_user' => session()->get('id_user'),
-        'id_pelanggan' => $data['id_pelanggan'],
-        'id_kendaraan' => $data['id_kendaraan'],
-        'tgl_sewa' => $data['tgl_sewa'],
-        'tgl_kembali_rencana' => $data['tgl_kembali'],
-        'lama_sewa' => $data['lama_sewa'],
-        'total_bayar' => $total,
-        'dp' => $dp,
-        'sisa_bayar' => $sisa,
-        'status_bayar' => $status,
-        'status_sewa' => 'Berlangsung'
-    ]);
+   $transaksiModel->insert([
+    'id_user' => session()->get('id_user'),
+    'id_pelanggan' => $data['id_pelanggan'],
+    'id_kendaraan' => $data['id_kendaraan'],
+    
+    'tgl_sewa' => $data['tgl_sewa'],
+    'jam_sewa' => $data['jam_sewa'],
+
+    'tgl_kembali_rencana' => $data['tgl_kembali'],
+    'jam_kembali' => $data['jam_sewa'],
+
+    'lama_sewa' => $data['lama_sewa'],
+    'total_bayar' => $total,
+    'dp' => $dp,
+    'sisa_bayar' => $sisa,
+    'status_bayar' => $status,
+    'status_sewa' => 'Berlangsung'
+]);
 
     $idTransaksi = $transaksiModel->insertID();
 
@@ -441,21 +460,21 @@ public function formKembalikan($id)
         return redirect()->back()->with('error', 'Data tidak ditemukan');
     }
 
-    // HITUNG TELAT
-    $today = date('Y-m-d');
+    // ================= HITUNG TELAT (PAKAI JAM) =================
+    $sekarang = date('Y-m-d H:i:s');
+    $jadwal = $transaksi['tgl_kembali_rencana'] . ' ' . $transaksi['jam_kembali'];
 
-$rencana = $transaksi['tgl_kembali_rencana'];
+    $telat = 0;
 
-$telat = 0;
+    if (strtotime($sekarang) > strtotime($jadwal)) {
+        $selisihDetik = strtotime($sekarang) - strtotime($jadwal);
+        $telatJam = floor($selisihDetik / 3600);
 
-if ($today > $rencana) {
-    $start = new \DateTime($rencana);
-    $end   = new \DateTime($today);
+        // tetap konsep hari (tidak ubah sistem kamu)
+        $telat = ceil($telatJam / 24);
+    }
 
-    $telat = $start->diff($end)->days;
-}
-
-$denda = $telat * 100000;
+    $denda = $telat * 100000;
 
     return view('kasir/transaksi/kembalikan', [
         't' => $transaksi,
@@ -484,20 +503,29 @@ public function prosesKembalikan($id)
         return redirect()->back()->with('error', 'Belum lunas!');
     }
 
-    $today = date('Y-m-d');
-    if ($today < $transaksi['tgl_kembali_rencana']) {
-    return redirect()->back()->with('error', 'Belum bisa dikembalikan! Tanggal kembali rencana: ' . $transaksi['tgl_kembali_rencana']);
+    // ================= FIX VALIDASI PAKAI JAM =================
+    $sekarang = date('Y-m-d H:i:s');
+    $jadwalKembali = $transaksi['tgl_kembali_rencana'] . ' ' . $transaksi['jam_kembali'];
+
+    if (strtotime($sekarang) < strtotime($jadwalKembali)) {
+        return redirect()->back()->with('error', 
+            'Belum bisa dikembalikan! Jadwal kembali: ' . 
+            date('d-m-Y H:i', strtotime($jadwalKembali))
+        );
     }
 
-    $tgl_kembali = date('Y-m-d');
-    $rencana = $transaksi['tgl_kembali_rencana'];
+    // ================= HITUNG TELAT (PAKAI JAM) =================
+    $now = new \DateTime();
+    $rencana = new \DateTime($transaksi['tgl_kembali_rencana'] . ' ' . $transaksi['jam_kembali']);
 
-    
     $telat = 0;
-    if ($tgl_kembali > $rencana) {
-        $start = new \DateTime($rencana);
-        $end   = new \DateTime($tgl_kembali);
-        $telat = $start->diff($end)->days;
+
+    if ($now > $rencana) {
+        $selisihDetik = $now->getTimestamp() - $rencana->getTimestamp();
+        $telatJam = floor($selisihDetik / 3600);
+
+        // tetap pakai konsep hari seperti sistem kamu
+        $telat = ceil($telatJam / 24);
     }
 
     $denda = $telat * 100000;
@@ -519,7 +547,9 @@ public function prosesKembalikan($id)
         $kembalian = $bayar - $denda;
     }
 
-    // UPDATE TRANSAKSI
+    // ================= SIMPAN =================
+    $tgl_kembali = date('Y-m-d');
+
     $transaksiModel->update($id, [
         'tgl_kembali' => $tgl_kembali,
         'status_sewa' => 'Selesai',
@@ -529,7 +559,6 @@ public function prosesKembalikan($id)
     helper('log');
     log_activity('Pengembalian kendaraan transaksi ID: ' . $id);
 
-    // UPDATE KENDARAAN
     $kendaraanModel->update($transaksi['id_kendaraan'], [
         'status' => 'tersedia'
     ]);
@@ -557,7 +586,7 @@ private function autoUpdateStatus()
 {
     $transaksiModel = new \App\Models\TransaksiModel();
 
-    $today = date('Y-m-d');
+    $now = date('Y-m-d H:i:s');
 
     // Ambil transaksi yang masih berlangsung
     $transaksi = $transaksiModel
@@ -566,7 +595,9 @@ private function autoUpdateStatus()
 
     foreach ($transaksi as $t) {
 
-    if ($today > $t['tgl_kembali_rencana'] && $t['status_sewa'] != 'Selesai') {
+    $jadwal = $t['tgl_kembali_rencana'] . ' ' . $t['jam_kembali'];
+
+    if (strtotime($now) > strtotime($jadwal) && $t['status_sewa'] != 'Selesai') {
 
         $transaksiModel->update($t['id_transaksi'], [
             'status_sewa' => 'Terlambat'

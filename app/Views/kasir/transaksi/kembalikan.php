@@ -30,9 +30,25 @@
                 <span class="info-value"><?= $t['nama_kendaraan'] ?></span>
             </div>
             <div class="info-row">
-                <span class="info-label">Tanggal Kembali Rencana</span>
-                <span class="info-value"><?= $t['tgl_kembali_rencana'] ?></span>
-            </div>
+    <span class="info-label">Tanggal Sewa</span>
+    <span class="info-value">
+        <?= date('d-m-Y', strtotime($t['tgl_sewa'])) ?>
+    </span>
+</div>
+
+<div class="info-row">
+    <span class="info-label">Jam Ambil</span>
+    <span class="info-value">
+        <?= !empty($t['jam_sewa']) ? date('H:i', strtotime($t['jam_sewa'])) : '-' ?>
+    </span>
+</div>
+
+<div class="info-row">
+    <span class="info-label">Tanggal Kembali</span>
+    <span class="info-value">
+        <?= date('d-m-Y', strtotime($t['tgl_kembali_rencana'])) ?> <?= $t['jam_kembali'] ?>
+    </span>
+</div>
         </div>
     </div>
 
@@ -48,7 +64,7 @@
         <div class="info-grid">
             <div class="info-row">
                 <span class="info-label">Hari Ini</span>
-                <span class="info-value"><?= date('d-m-Y') ?></span>
+                <span class="info-value"><?= date('d-m-Y H:i') ?></span>
             </div>
             <div class="info-row">
                 <span class="info-label">Telat</span>
@@ -93,7 +109,11 @@
                 </div>
             <?php endif; ?>
 
-            <?php $bolehKembali = date('Y-m-d') >= $t['tgl_kembali_rencana']; ?>
+            <?php 
+            $sekarang = date('Y-m-d H:i:s');
+            $jadwalKembali = $t['tgl_kembali_rencana'] . ' ' . $t['jam_sewa'];
+            $bolehKembali = strtotime($sekarang) >= strtotime($jadwalKembali);
+            ?>
 
 <div class="form-actions">
     <?php if($bolehKembali): ?>
@@ -104,7 +124,9 @@
     <?php else: ?>
         <div class="nodenda-box" style="background: rgba(231,76,60,0.08); border-color: rgba(231,76,60,0.25); color: #c0392b;">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-            <span>Pengembalian belum bisa dilakukan. Tanggal kembali rencana: <b><?= $t['tgl_kembali_rencana'] ?></b></span>
+            <span>Pengembalian belum bisa dilakukan. Tanggal kembali rencana: 
+<b><?= date('d-m-Y', strtotime($t['tgl_kembali_rencana'])) ?>
+<?= !empty($t['jam_sewa']) ? date('H:i', strtotime($t['jam_sewa'])) : '' ?></b></span>
         </div>
     <?php endif; ?>
 </div>
