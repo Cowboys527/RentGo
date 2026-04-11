@@ -3,7 +3,6 @@
 
 <link rel="stylesheet" href="<?= base_url('css/log/index.css') ?>">
 
-<!-- Page Header -->
 <div class="page-header">
     <h2 class="page-title">Log Activity</h2>
     <p class="page-subtitle">Riwayat aktivitas sistem rental kendaraan</p>
@@ -23,6 +22,7 @@
         <option value="Login">Login</option>
         <option value="transaksi">Transaksi</option>
         <option value="Logout">Logout</option>
+        <option value="kendaraan">Kendaraan</option>
     </select>
 
     <select name="tanggal" class="filter-select">
@@ -67,6 +67,11 @@
         $badge_class = 'badge-transaksi';
         $icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>';
         $icon_bg = 'icon-bg-blue';
+    } elseif (strpos($log['aktivitas'], 'kendaraan') !== false) {
+        $color = 'orange';
+        $badge_class = 'badge-kendaraan';
+        $icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99z"/></svg>';
+        $icon_bg = 'icon-bg-orange';
     } else {
         $color = 'gray';
         $badge_class = 'badge-other';
@@ -101,6 +106,7 @@
             if (strpos($log['aktivitas'], 'Login') !== false) echo 'Login';
             elseif (strpos($log['aktivitas'], 'Logout') !== false) echo 'Logout';
             elseif (strpos($log['aktivitas'], 'transaksi') !== false) echo 'Transaksi';
+            elseif (strpos($log['aktivitas'], 'kendaraan') !== false) echo 'Kendaraan';
             else echo 'Aktivitas';
         ?>
     </span>

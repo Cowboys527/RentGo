@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\KendaraanModel;
+use App\Models\LogActivityModel;
 
 class Kendaraan extends BaseController
 {
@@ -28,9 +29,9 @@ class Kendaraan extends BaseController
         $model->where('status', $status);
     }
 
-    $model->orderBy('id_kendaraan', 'DESC'); // ← tambahkan ini (masalah 1: terbaru di depan)
+    $model->orderBy('id_kendaraan', 'DESC'); 
 
-    $data['kendaraan'] = $model->paginate(6); // ← ubah 5 → 6 (masalah 2: kelipatan 3 biar grid penuh)
+    $data['kendaraan'] = $model->paginate(6); 
     $data['pager']     = $model->pager;
 
     $data['keyword'] = $keyword;
@@ -77,6 +78,17 @@ class Kendaraan extends BaseController
             'status'         => $this->request->getPost('status'),
         ]);
 
+        $logModel = new LogActivityModel();
+
+        $logModel->insert([
+        'user_id'        => session()->get('id_user'),
+        'nama_user'      => session()->get('nama'),
+        'created_by_role'=> session()->get('role'),
+        'aktivitas'      => 'Admin menambahkan kendaraan ' . $this->request->getPost('nama_kendaraan'),
+        'ip_address'     => $this->request->getIPAddress(),
+        'created_at'     => date('Y-m-d H:i:s')
+      ]);
+
         return redirect()->to('/admin/kendaraan')
                          ->with('success', 'Data kendaraan berhasil ditambahkan');
     }
@@ -121,16 +133,40 @@ class Kendaraan extends BaseController
 
         $model->update($id, $dataUpdate);
 
+        $logModel = new LogActivityModel();
+
+        $logModel->insert([
+        'user_id'        => session()->get('id_user'),
+        'nama_user'      => session()->get('nama'),
+        'created_by_role'=> session()->get('role'),
+        'aktivitas'      => 'Admin mengubah kendaraan ' . $this->request->getPost('nama_kendaraan'),
+        'ip_address'     => $this->request->getIPAddress(),
+        'created_at'     => date('Y-m-d H:i:s')
+        ]);
+
         return redirect()->to('/admin/kendaraan')
                          ->with('success', 'Data kendaraan berhasil diupdate');
     }
 
     public function hapus($id)
-    {
-        $model = new KendaraanModel();
-        $model->delete($id);
+{
+    $model = new KendaraanModel();
+    $kendaraan = $model->find($id);
 
-        return redirect()->to('/admin/kendaraan')
-                         ->with('success', 'Data kendaraan berhasil dihapus');
-    }
+    $model->delete($id);
+
+    $logModel = new LogActivityModel();
+
+    $logModel->insert([
+        'user_id'        => session()->get('id_user'),
+        'nama_user'      => session()->get('nama'),
+        'created_by_role'=> session()->get('role'),
+        'aktivitas'      => 'Admin menghapus kendaraan ' . ($kendaraan['nama_kendaraan'] ?? ''),
+        'ip_address'     => $this->request->getIPAddress(),
+        'created_at'     => date('Y-m-d H:i:s')
+    ]);
+
+    return redirect()->to('/admin/kendaraan')
+                     ->with('success', 'Data kendaraan berhasil dihapus');
+}
 }

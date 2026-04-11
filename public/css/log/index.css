@@ -139,6 +139,8 @@
 .log-card-red    { border-left-color: #E74C3C; }
 .log-card-blue   { border-left-color: #1976d2; }
 .log-card-gray   { border-left-color: #9e9e9e; }
+.log-card-orange { border-left-color: #f39c12; }
+
 
 /* ════════════════════════════
    LOG ICON
@@ -163,6 +165,8 @@
 .icon-bg-red   { background: #E74C3C; }
 .icon-bg-blue  { background: #1976d2; }
 .icon-bg-gray  { background: #9e9e9e; }
+.icon-bg-orange { background: #f39c12; }
+
 
 /* ════════════════════════════
    LOG BODY
@@ -232,6 +236,11 @@
 .badge-other {
     background: rgba(158, 158, 158, 0.12);
     color: #757575;
+}
+
+.badge-kendaraan {
+    background: rgba(243, 156, 18, 0.15);
+    color: #d68910;
 }
 
 .empty-state {
