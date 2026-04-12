@@ -5,7 +5,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!-- Page Header -->
+
 <div class="page-header">
     <h2 class="page-title">Pembayaran Rental</h2>
     <p class="page-subtitle">Proses pembayaran transaksi sewa kendaraan</p>
@@ -13,7 +13,7 @@
 
 <div class="pembayaran-wrapper">
 
-    <!-- Total Bayar Card -->
+
     <div class="form-section">
         <div class="section-title">
             <div class="section-icon section-icon-blue">
@@ -22,13 +22,12 @@
             <h3>Ringkasan Pembayaran</h3>
         </div>
 
-        <!-- Total Box -->
+       
         <div class="total-box">
             <span class="total-label">Total Bayar</span>
             <span class="total-value">Rp <?= number_format($total) ?></span>
         </div>
 
-        <!-- Info Keterangan -->
         <div class="info-box">
             <div class="info-item">
                 <span class="info-dot dot-orange"></span>
@@ -41,7 +40,6 @@
         </div>
     </div>
 
-    <!-- Form Pembayaran -->
     <div class="form-section">
         <div class="section-title">
             <div class="section-icon section-icon-green">

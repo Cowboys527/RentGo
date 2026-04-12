@@ -3,7 +3,7 @@
 
 <link rel="stylesheet" href="<?= base_url('css/transaksi/tambah.css') ?>">
 
-<!-- Page Header -->
+
 <div class="page-header">
     <h2 class="page-title">Transaksi Rental</h2>
     <p class="page-subtitle">Buat transaksi sewa kendaraan baru</p>
@@ -11,7 +11,7 @@
 
 <form action="<?= base_url('kasir/transaksi/simpan') ?>" method="post" enctype="multipart/form-data" class="form-wrapper">
 
-    <!-- ================= DATA PELANGGAN ================= -->
+    
     <div class="form-section">
         <div class="section-title">
             <div class="section-icon section-icon-blue">
@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    <!-- ================= DATA KENDARAAN ================= -->
+    
     <div class="form-section">
         <div class="section-title">
             <div class="section-icon section-icon-orange">
@@ -98,7 +98,7 @@
         </div>
     </div>
 
-    <!-- ================= DATA SEWA ================= -->
+    
     <div class="form-section">
         <div class="section-title">
             <div class="section-icon section-icon-green">
@@ -129,7 +129,7 @@
         </div>
     </div>
 
-    <!-- ================= TOTAL BAYAR ================= -->
+   
     <div class="form-section">
         <div class="section-title">
             <div class="section-icon section-icon-purple">
@@ -144,7 +144,6 @@
         </div>
     </div>
 
-    <!-- ================= ACTIONS ================= -->
     <div class="form-actions">
         <button type="submit" class="btn-submit">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
@@ -157,7 +156,6 @@
 
 </form>
 
-<!-- ================= OVERLAY KENDARAAN ================= -->
 <div id="overlayKendaraan" class="overlay-kendaraan">
 
     <div class="overlay-content">
@@ -190,7 +188,6 @@
     </div>
 </div>                                                                                  
 
-<!-- ================= JAVASCRIPT ================= -->
 <script>
 const overlay = document.getElementById('overlayKendaraan');
 const openBtn = document.getElementById('openKendaraan');
@@ -207,22 +204,21 @@ const jamSewa = document.getElementById('jam_sewa');
 
 let hargaPerHari = 0;
 
-// ← pindah ke sini, setelah semua variabel dideklarasikan
 const today = new Date().toISOString().split('T')[0];
 tglSewa.setAttribute('min', today);
 tglKembali.setAttribute('min', today);
 
-// OPEN OVERLAY
+
 openBtn.addEventListener('click', () => {
     overlay.classList.add('show');
 });
 
-// CLOSE
+
 function closeOverlay() {
     overlay.classList.remove('show');
 }
 
-// PILIH KENDARAAN
+
 document.querySelectorAll('.card-kendaraan').forEach(card => {
     card.addEventListener('click', function() {
         const id = this.dataset.id;
@@ -242,7 +238,7 @@ document.querySelectorAll('.card-kendaraan').forEach(card => {
     });
 });
 
-// HITUNG
+
 function hitungHari() {
     if (tglSewa.value && tglKembali.value) {
         const start = new Date(tglSewa.value);
@@ -268,7 +264,6 @@ function hitungTotal() {
     }
 }
 
-// Tanggal kembali minimum ikuti tanggal sewa
 tglSewa.addEventListener('change', function() {
     tglKembali.setAttribute('min', this.value);
     hitungTotal();

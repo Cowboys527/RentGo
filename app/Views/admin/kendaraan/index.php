@@ -21,7 +21,6 @@
     </div>
 <?php endif; ?>
 
-<!-- SEARCH & FILTER BAR -->
 <div class="filter-bar">
     <form method="get" action="/admin/kendaraan" class="search-form">
         <div class="search-box">
@@ -54,7 +53,6 @@
     </form>
 </div>
 
-<!-- CARD GRID -->
 <div class="cards-grid">
     <?php foreach ($kendaraan as $k): ?>
     <div class="vehicle-card">
@@ -95,7 +93,7 @@
                 </div>
             </div>
 
-            <!-- Action Buttons -->
+            
             <div class="card-actions">
                 <a href="/admin/kendaraan/edit/<?= $k['id_kendaraan'] ?>" 
                    class="btn-card btn-edit-card">Edit</a>
@@ -114,7 +112,7 @@
     <?php endif; ?>
 </div>
 
-<!-- PAGINATION -->
+
 <div class="pagination-wrapper">
     <?= $pager->links() ?>
 </div>

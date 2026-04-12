@@ -32,7 +32,7 @@ Kendaraan: <?= $t['nama_kendaraan'] ?><br>
 <div class="line"></div>
 
 Sewa: <?= date('d-m-Y', strtotime($t['tgl_sewa'])) ?> <?= $t['jam_sewa'] ?><br>
-Kembali: <?= date('d-m-Y', strtotime($t['tgl_kembali_rencana'])) ?> <?= $t['jam_kembali'] ?><br>
+Kembali: <?= date('d-m-Y', strtotime($t['tgl_kembali_rencana'])) ?><br>
 Durasi: <?= $t['lama_sewa'] ?> Hari<br>
 
 <div class="line"></div>

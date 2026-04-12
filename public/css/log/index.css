@@ -16,9 +16,6 @@
     font-weight: 400;
 }
 
-/* ════════════════════════════
-   FILTER BAR
-════════════════════════════ */
 .filter-bar {
     display: flex;
     align-items: center;
@@ -107,18 +104,12 @@
     background: #ebebeb;
 }
 
-/* ════════════════════════════
-   LOG LIST
-════════════════════════════ */
 .log-list {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
 
-/* ════════════════════════════
-   LOG CARD
-════════════════════════════ */
 .log-card {
     background: white;
     border-radius: 14px;
@@ -141,10 +132,6 @@
 .log-card-gray   { border-left-color: #9e9e9e; }
 .log-card-orange { border-left-color: #f39c12; }
 
-
-/* ════════════════════════════
-   LOG ICON
-════════════════════════════ */
 .log-icon {
     width: 42px;
     height: 42px;
@@ -167,10 +154,6 @@
 .icon-bg-gray  { background: #9e9e9e; }
 .icon-bg-orange { background: #f39c12; }
 
-
-/* ════════════════════════════
-   LOG BODY
-════════════════════════════ */
 .log-body {
     flex: 1;
     min-width: 0;
@@ -204,9 +187,6 @@
     flex-shrink: 0;
 }
 
-/* ════════════════════════════
-   LOG BADGE
-════════════════════════════ */
 .log-badge {
     display: inline-block;
     padding: 4px 12px;

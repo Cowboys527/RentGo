@@ -1,11 +1,3 @@
-/* ═══════════════════════════════════════
-   detail.css — Detail Transaksi
-   Letakkan di: public/css/transaksi/detail.css
-═══════════════════════════════════════ */
-
-/* ════════════════════════════
-   PAGE HEADER
-════════════════════════════ */
 .page-header {
     margin-bottom: 28px;
     max-width: 800px;
@@ -27,9 +19,6 @@
     font-weight: 400;
 }
 
-/* ════════════════════════════
-   DETAIL WRAPPER
-════════════════════════════ */
 .detail-wrapper {
     display: flex;
     flex-direction: column;
@@ -38,9 +27,6 @@
     margin: 0 auto;
 }
 
-/* ════════════════════════════
-   FORM SECTION (Card)
-════════════════════════════ */
 .form-section {
     background: white;
     border-radius: 16px;
@@ -48,7 +34,7 @@
     padding: 28px;
 }
 
-/* Section Title */
+
 .section-title {
     display: flex;
     align-items: center;
@@ -66,7 +52,6 @@
     margin: 0;
 }
 
-/* Section Icons */
 .section-icon {
     width: 40px;
     height: 40px;
@@ -87,9 +72,7 @@
 .section-icon-orange { background: #ff9800; }
 .section-icon-green  { background: #00c853; }
 
-/* ════════════════════════════
-   INFO GRID (Detail Rows)
-════════════════════════════ */
+
 .info-grid {
     display: flex;
     flex-direction: column;
@@ -137,9 +120,6 @@
     font-weight: 700;
 }
 
-/* ════════════════════════════
-   STATUS BADGE
-════════════════════════════ */
 .status-badge {
     display: inline-block;
     padding: 5px 14px;
@@ -163,9 +143,6 @@
     color: #c0392b;
 }
 
-/* ════════════════════════════
-   FORM INPUT (Bayar Sisa)
-════════════════════════════ */
 .form-group {
     display: flex;
     flex-direction: column;
@@ -222,9 +199,6 @@
     color: #bdbdbd;
 }
 
-/* ════════════════════════════
-   LUNAS BOX
-════════════════════════════ */
 .lunas-box {
     display: flex;
     align-items: center;
@@ -243,9 +217,6 @@
     flex-shrink: 0;
 }
 
-/* ════════════════════════════
-   ACTION BUTTONS
-════════════════════════════ */
 .form-actions {
     display: flex;
     align-items: center;
@@ -290,9 +261,6 @@
     background: #00a844;
 }
 
-/* ════════════════════════════
-   BACK BUTTON
-════════════════════════════ */
 .back-action {
     padding-bottom: 8px;
     margin-top: 8px; 
@@ -303,9 +271,9 @@
     align-items: center;
     gap: 8px;
     padding: 11px 22px;
-    background: #ff9800; /* ← ubah jadi orange */
-    color: white;        /* ← ubah jadi putih */
-    border: none;        /* ← hapus border */
+    background: #ff9800; 
+    color: white;        
+    border: none;        
     border-radius: 10px;
     font-size: 14px;
     font-weight: 600;
@@ -314,12 +282,9 @@
 }
 
 .btn-back:hover {
-    background: #e68900; /* ← hover lebih gelap */
+    background: #e68900; 
 }
 
-/* ════════════════════════════
-   RESPONSIVE
-════════════════════════════ */
 @media (max-width: 768px) {
     .page-title {
         font-size: 22px;

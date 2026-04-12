@@ -19,10 +19,6 @@ class Admin extends BaseController
         $userModel      = new UserModel();
         $transaksiModel = new TransaksiModel();
 
-        // =============================
-        // RINGKASAN DATA
-        // =============================
-
         $totalKendaraan = $kendaraanModel->countAll();
 
         $tersedia = $kendaraanModel
@@ -34,10 +30,6 @@ class Admin extends BaseController
             ->countAllResults();
 
         $totalUser = $userModel->countAll();
-
-        // =============================
-        // TRANSAKSI HARI INI
-        // =============================
 
         $today = date('Y-m-d');
 
@@ -54,10 +46,6 @@ class Admin extends BaseController
         ->where('transaksi.tgl_sewa', $today)
         ->orderBy('transaksi.id_transaksi', 'DESC')
         ->findAll();
-
-        // =============================
-        // KIRIM KE VIEW
-        // =============================
 
         $data = [
             'totalKendaraan'   => $totalKendaraan,

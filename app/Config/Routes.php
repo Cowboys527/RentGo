@@ -13,7 +13,6 @@ $routes->post('/auth/login', 'Auth::login');
 $routes->get('/logout', 'Auth::logout');
 
 
-// ================= ADMIN =================
 $routes->group('admin', function($routes) {
 
     $routes->get('dashboard', 'Admin::dashboard');
@@ -60,7 +59,6 @@ $routes->group('kasir', function($routes){
 
 });
 
-// ================= OWNER =================
 $routes->group('owner', function($routes){
     $routes->get('dashboard', 'Owner::dashboard');
     $routes->get('laporan', 'Owner::laporan');

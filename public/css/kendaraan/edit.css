@@ -1,20 +1,9 @@
-/* ═══════════════════════════════════════
-   edit.css — Edit Kendaraan
-   Letakkan di: public/css/kendaraan/edit.css
-═══════════════════════════════════════ */
-
-/* ════════════════════════════
-   CONTAINER
-════════════════════════════ */
 .form-container {
     padding: 28px 32px;
     max-width: 700px;
     margin: 0 auto;
 }
 
-/* ════════════════════════════
-   PAGE HEADER
-════════════════════════════ */
 .page-header {
     margin-bottom: 24px;
 }
@@ -33,9 +22,6 @@
     margin: 0;
 }
 
-/* ════════════════════════════
-   ALERT ERROR
-════════════════════════════ */
 .alert-error {
     background: rgba(231, 76, 60, 0.1);
     border: 1px solid #e74c3c;
@@ -64,9 +50,6 @@
     margin: 4px 0;
 }
 
-/* ════════════════════════════
-   FORM CARD
-════════════════════════════ */
 .form-card {
     background: white;
     border: 1px solid #e0e0e0;
@@ -80,9 +63,7 @@
     gap: 20px;
 }
 
-/* ════════════════════════════
-   FORM GROUP
-════════════════════════════ */
+
 .form-group {
     display: flex;
     flex-direction: column;

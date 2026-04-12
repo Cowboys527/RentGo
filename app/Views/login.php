@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — RentGo</title>
 
-    <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="<?= base_url('css/login.css') ?>">
@@ -17,10 +15,8 @@
 
    <div class="login-container">
 
-    <!-- LEFT SIDE -->
     <div class="login-left">
 
-        <!-- Phone Mockup -->
         <div class="phone-mockup">
             <div class="phone-screen">
 
@@ -42,7 +38,6 @@
             </div>
         </div>
 
-        <!-- Car Illustration -->
         <svg class="car-illustration" viewBox="0 0 400 200" fill="none">
             <ellipse cx="200" cy="180" rx="180" ry="20" fill="rgba(0,0,0,0.08)"/>
 
@@ -73,10 +68,7 @@
         </svg>
 
     </div>
-    <!-- END LEFT SIDE -->
 
-
-    <!-- RIGHT SIDE -->
     <div class="login-right">
 
         <div class="login-header">
@@ -116,7 +108,6 @@
         </form>
 
     </div>
-    <!-- END RIGHT SIDE -->
 
 </div>
 

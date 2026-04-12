@@ -8,7 +8,6 @@
     <p class="page-subtitle">Riwayat aktivitas sistem rental kendaraan</p>
 </div>
 
-<!-- FILTER -->
 <form method="get" class="filter-bar">
 
     <div class="search-wrapper">
@@ -39,7 +38,7 @@
 
 </form>
 
-<!-- LIST LOG -->
+
 <div class="log-list">
 
 <?php if(empty($logs)): ?>
@@ -116,7 +115,6 @@
 
 </div>
 
-<!-- PAGINATION -->
 <div class="pager-wrapper">
     <?= $pager->links() ?>
 </div>

@@ -3,13 +3,11 @@
 
 <link rel="stylesheet" href="<?= base_url('css/laporan/index.css') ?>">
 
-<!-- Header -->
 <div class="page-header">
     <h2 class="page-title">Laporan Transaksi</h2>
     <p class="page-subtitle">Laporan transaksi harian, bulanan, dan tahunan</p>
 </div>
 
-<!-- FILTER -->
 <form method="get" class="filter-bar">
 
     <select name="filter" class="filter-select">

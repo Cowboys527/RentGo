@@ -124,7 +124,7 @@ public function simpanTransaksi()
     $kendaraanModel = new \App\Models\KendaraanModel();
     $pelangganModel = new \App\Models\PelangganModel();
 
-    // ================= INPUT =================
+    //INPUT
     $id_kendaraan = $this->request->getPost('id_kendaraan');
     $nama         = $this->request->getPost('nama_pelanggan');
     $jam_sewa    = $this->request->getPost('jam_sewa');
@@ -132,7 +132,7 @@ public function simpanTransaksi()
     $alamat       = $this->request->getPost('alamat');
     $nik          = $this->request->getPost('nik');
 
-    // ================= VALIDASI NIK =================
+    //VALIDASI NIK 
     if (empty($nik)) {
         return redirect()->back()->with('error', 'NIK wajib diisi');
     }
@@ -141,11 +141,11 @@ public function simpanTransaksi()
         return redirect()->back()->with('error', 'NIK harus 16 digit angka!');
     }
 
-    // ================= TANGGAL =================
+    //TANGGAL
     $tgl_sewa    = $this->request->getPost('tgl_sewa');
     $tgl_kembali = $this->request->getPost('tgl_kembali');
 
-    // ================= UPLOAD KTP =================
+    //UPLOAD KTP
 $fileKtp = $this->request->getFile('foto_ktp');
 $namaFileKtp = null;
 
@@ -156,7 +156,7 @@ if ($fileKtp && $fileKtp->isValid() && !$fileKtp->hasMoved()) {
     return redirect()->back()->with('error', 'Upload KTP gagal');
 }
 
-// ================= UPLOAD SIM =================
+//UPLOAD SIM
 $fileSim = $this->request->getFile('foto_sim');
 $namaFileSim = null;
 
@@ -171,14 +171,13 @@ if (empty($jam_sewa)) {
     return redirect()->back()->with('error', 'Jam sewa wajib diisi');
 }
     
-    // ================= HITUNG LAMA SEWA (PAKAI JAM) =================
+    //HITUNG LAMA SEWA (PAKAI JAM)
 $start = new \DateTime($tgl_sewa . ' ' . $jam_sewa);
 $end   = new \DateTime($tgl_kembali . ' ' . $jam_sewa);
 
 // hitung selisih dalam jam
 $selisihJam = ($end->getTimestamp() - $start->getTimestamp()) / 3600;
 
-// konversi ke hari (dibulatkan ke atas)
 $lama_sewa = ceil($selisihJam / 24);
 
 // minimal 1 hari
@@ -460,7 +459,7 @@ public function formKembalikan($id)
         return redirect()->back()->with('error', 'Data tidak ditemukan');
     }
 
-    // ================= HITUNG TELAT (PAKAI JAM) =================
+    //HITUNG TELAT (PAKAI JAM)
     $sekarang = date('Y-m-d H:i:s');
     $jadwal = $transaksi['tgl_kembali_rencana'] . ' ' . $transaksi['jam_kembali'];
 
@@ -470,7 +469,6 @@ public function formKembalikan($id)
         $selisihDetik = strtotime($sekarang) - strtotime($jadwal);
         $telatJam = floor($selisihDetik / 3600);
 
-        // tetap konsep hari (tidak ubah sistem kamu)
         $telat = ceil($telatJam / 24);
     }
 
@@ -503,7 +501,7 @@ public function prosesKembalikan($id)
         return redirect()->back()->with('error', 'Belum lunas!');
     }
 
-    // ================= FIX VALIDASI PAKAI JAM =================
+    //FIX VALIDASI PAKAI JAM
     $sekarang = date('Y-m-d H:i:s');
     $jadwalKembali = $transaksi['tgl_kembali_rencana'] . ' ' . $transaksi['jam_kembali'];
 
@@ -514,7 +512,7 @@ public function prosesKembalikan($id)
         );
     }
 
-    // ================= HITUNG TELAT (PAKAI JAM) =================
+    //HITUNG TELAT (PAKAI JAM)
     $now = new \DateTime();
     $rencana = new \DateTime($transaksi['tgl_kembali_rencana'] . ' ' . $transaksi['jam_kembali']);
 
@@ -524,7 +522,6 @@ public function prosesKembalikan($id)
         $selisihDetik = $now->getTimestamp() - $rencana->getTimestamp();
         $telatJam = floor($selisihDetik / 3600);
 
-        // tetap pakai konsep hari seperti sistem kamu
         $telat = ceil($telatJam / 24);
     }
 
@@ -547,7 +544,6 @@ public function prosesKembalikan($id)
         $kembalian = $bayar - $denda;
     }
 
-    // ================= SIMPAN =================
     $tgl_kembali = date('Y-m-d');
 
     $transaksiModel->update($id, [
@@ -588,7 +584,6 @@ private function autoUpdateStatus()
 
     $now = date('Y-m-d H:i:s');
 
-    // Ambil transaksi yang masih berlangsung
     $transaksi = $transaksiModel
         ->whereIn('status_sewa', ['Berlangsung', 'Terlambat'])
         ->findAll();

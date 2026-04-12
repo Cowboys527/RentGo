@@ -19,9 +19,6 @@
     font-weight: 400;
 }
 
-/* ════════════════════════════
-   FORM WRAPPER
-════════════════════════════ */
 .form-wrapper {
     display: flex;
     flex-direction: column;
@@ -30,9 +27,6 @@
     margin: 0 auto; 
 }
 
-/* ════════════════════════════
-   FORM SECTION (Card)
-════════════════════════════ */
 .form-section {
     background: white;
     border-radius: 16px;
@@ -40,7 +34,6 @@
     padding: 28px;
 }
 
-/* Section Title with Icon */
 .section-title {
     display: flex;
     align-items: center;
@@ -79,9 +72,6 @@
 .section-icon-green  { background: #00c853; }
 .section-icon-purple { background: #E74C3C; }
 
-/* ════════════════════════════
-   FORM LAYOUT
-════════════════════════════ */
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -145,13 +135,11 @@
     border-color: #1976d2;
 }
 
-/* efek focus */
 .form-select:focus {
     border-color: #1976d2;
     box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.15);
 }
 
-/* Readonly fields */
 .form-readonly {
     background: #f8f9fa;
     color: #757575;
@@ -163,7 +151,6 @@
     box-shadow: none;
 }
 
-/* Highlighted readonly (harga) */
 .form-highlight {
     background: #f0f7ff;
     color: #1565c0;
@@ -171,9 +158,6 @@
     border-color: rgba(21, 101, 192, 0.2);
 }
 
-/* ════════════════════════════
-   TOTAL BOX
-════════════════════════════ */
 .total-box {
     background: linear-gradient(135deg, #1565c0 0%, #1976d2 100%);
     border-radius: 12px;
@@ -208,9 +192,6 @@
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* ════════════════════════════
-   ACTION BUTTONS
-════════════════════════════ */
 .form-actions {
     display: flex;
     align-items: center;
@@ -256,7 +237,6 @@
     background: #e68900; 
 }
 
- /* ================= OVERLAY FULL SCREEN ================= */
 .overlay-kendaraan {
     position: fixed;
     top: 0;
@@ -271,12 +251,10 @@
     z-index: 9999;
 }
 
-/* aktif */
 .overlay-kendaraan.show {
     display: block;
 }
 
-/* isi overlay */
 .overlay-content {
     background: white;
     width: 90%;
@@ -290,7 +268,7 @@
     flex-direction: column;
 }
 
-/* header */
+
 .overlay-header {
     display: flex;
     justify-content: space-between;
@@ -311,7 +289,7 @@
     cursor: pointer;
 }
 
-/* GRID */
+
 .grid-kendaraan {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
@@ -319,7 +297,7 @@
     overflow-y: auto;
 }
 
-/* CARD */
+
 .card-kendaraan {
     background: #fff;
     border-radius: 12px;
@@ -333,7 +311,7 @@
     transform: none;
 }
 
-/* IMAGE */
+
 .card-kendaraan img {
     width: 100%;
     height: 120px;
@@ -341,7 +319,6 @@
     border-radius: 8px;
 }
 
-/* BUTTON */
 .btn-pilih {
     margin-top: 8px;
     background: #1976d2;
@@ -352,9 +329,6 @@
     cursor: pointer;
 }
 
-/* ════════════════════════════
-   RESPONSIVE
-════════════════════════════ */
 @media (max-width: 768px) {
     .form-row {
         grid-template-columns: 1fr;

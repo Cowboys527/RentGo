@@ -21,7 +21,6 @@
     </div>
 <?php endif; ?>
 
-<!-- SEARCH & FILTER BAR -->
 <div class="filter-bar">
     <form method="get" action="/admin/user" class="search-form">
         <div class="search-box">
@@ -42,7 +41,6 @@
     </form>
 </div>
 
-<!-- TABLE CARD -->
 <div class="table-card">
     <table class="data-table">
         <thead>
@@ -97,7 +95,7 @@
     </table>
 </div>
 
-<!-- PAGINATION -->
+
 <div class="pagination-wrapper">
     <?= $pager->links() ?>
 </div>

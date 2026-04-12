@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="<?= base_url('css/admin_sidebar.css') ?>">
     <link rel="preload" as="image" href="<?= base_url('img/logo.png') ?>">
 
-    <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
 </head>

@@ -3,16 +3,16 @@
 
 <link rel="stylesheet" href="<?= base_url('css/dashboard_kasir.css') ?>">
 
-<!-- Header -->
+
 <div class="dashboard-header">
     <h1 class="dashboard-title">Dashboard Kasir</h1>
     <p class="dashboard-subtitle">Ringkasan Transaksi Hari Ini</p>
 </div>
 
-<!-- KPI Cards Grid -->
+
 <div class="kpi-grid">
 
-    <!-- Card 1: Transaksi Hari Ini -->
+    
     <div class="kpi-card">
         <div class="kpi-icon kpi-icon-blue">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -25,7 +25,6 @@
         </div>
     </div>
 
-    <!-- Card 2: Kendaraan Tersedia -->
     <div class="kpi-card">
         <div class="kpi-icon kpi-icon-green">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -38,7 +37,7 @@
         </div>
     </div>
 
-    <!-- Card 3: Kendaraan Disewa -->
+    
     <div class="kpi-card">
         <div class="kpi-icon kpi-icon-orange">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -53,7 +52,6 @@
 
 </div>
 
-<!-- Tabel Transaksi Hari Ini -->
 <div class="table-section">
     <div class="table-header">
         <h3 class="table-title">Daftar Transaksi Hari Ini</h3>

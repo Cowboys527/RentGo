@@ -1,18 +1,7 @@
-/* ═══════════════════════════════════════
-   index.css — Data User
-   Letakkan di: public/css/user/index.css
-═══════════════════════════════════════ */
-
-/* ════════════════════════════
-   CONTAINER
-════════════════════════════ */
 .user-container {
     padding: 28px 32px;
 }
 
-/* ════════════════════════════
-   PAGE HEADER
-════════════════════════════ */
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -38,9 +27,6 @@
     margin: 0;
 }
 
-/* ════════════════════════════
-   BUTTON ADD
-════════════════════════════ */
 .btn-add {
     display: inline-flex;
     align-items: center;
@@ -71,9 +57,6 @@
     background-repeat: no-repeat;
 }
 
-/* ════════════════════════════
-   ALERT SUCCESS
-════════════════════════════ */
 .alert-success {
     background: rgba(0, 200, 83, 0.1);
     border: 1px solid #00c853;
@@ -98,9 +81,6 @@
     background-repeat: no-repeat;
 }
 
-/* ════════════════════════════
-   FILTER BAR
-════════════════════════════ */
 .filter-bar {
     background: white;
     border: 1px solid #e0e0e0;
@@ -190,9 +170,6 @@
     color: #1976d2;
 }
 
-/* ════════════════════════════
-   TABLE CARD
-════════════════════════════ */
 .table-card {
     background: white;
     border: 1px solid #e0e0e0;
@@ -220,22 +197,22 @@
     color: #5a6c7d;
 }
 
-/* Center align untuk kolom NO */
+
 .data-table th:first-child {
     text-align: center;
 }
 
-/* Center align untuk kolom ROLE (ke-4) */
+
 .data-table th:nth-child(4) {
     text-align: center;
 }
 
-/* Center align untuk kolom STATUS (ke-5) */
+
 .data-table th:nth-child(5) {
     text-align: center;
 }
 
-/* Center align untuk kolom AKSI (terakhir) */
+
 .data-table th:last-child {
     text-align: center;
 }
@@ -247,17 +224,17 @@
     border-bottom: 1px solid #f0f0f0;
 }
 
-/* Center align untuk kolom NO */
+
 .data-table td:first-child {
     text-align: center;
 }
 
-/* Center align untuk kolom ROLE (ke-4) */
+
 .data-table td:nth-child(4) {
     text-align: center;
 }
 
-/* Center align untuk kolom STATUS (ke-5) */
+
 .data-table td:nth-child(5) {
     text-align: center;
 }
@@ -274,7 +251,6 @@
     border-bottom: none;
 }
 
-/* Table Styling */
 .table-no {
     display: inline-block;
     width: 32px;
@@ -292,7 +268,6 @@
     color: #2c3e50;
 }
 
-/* Role Badge */
 .role-badge {
     display: inline-block;
     padding: 6px 14px;
@@ -319,7 +294,6 @@
     color: #1565c0;
 }
 
-/* Status Badge */
 .status-badge {
     display: inline-block;
     padding: 6px 14px;
@@ -339,7 +313,6 @@
     color: #e74c3c;
 }
 
-/* Action Buttons */
 .action-buttons {
     display: flex;
     gap: 8px;
@@ -360,7 +333,6 @@
     position: relative;
 }
 
-/* Icon Edit */
 .btn-edit {
     background: rgba(21, 101, 192, 0.08);
     color: #1565c0;
@@ -388,7 +360,6 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z'/%3E%3C/svg%3E");
 }
 
-/* Icon Delete */
 .btn-delete {
     background: rgba(231, 76, 60, 0.08);
     color: #e74c3c;
@@ -416,7 +387,6 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z'/%3E%3C/svg%3E");
 }
 
-/* Empty State */
 .empty-state {
     text-align: center;
     padding: 60px 20px;
@@ -425,9 +395,6 @@
     font-style: italic;
 }
 
-/* ════════════════════════════
-   PAGINATION
-════════════════════════════ */
 .pagination-wrapper {
     margin-top: 20px;
     display: flex;
@@ -472,9 +439,6 @@
     border-color: #1565c0;
 }
 
-/* ════════════════════════════
-   RESPONSIVE
-════════════════════════════ */
 @media (max-width: 768px) {
     .user-container {
         padding: 20px 16px;

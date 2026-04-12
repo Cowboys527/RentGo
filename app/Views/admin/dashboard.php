@@ -3,16 +3,15 @@
 
 <link rel="stylesheet" href="<?= base_url('css/dashboard_admin.css') ?>">
 
-<!-- Header -->
 <div class="dashboard-header">
     <h1 class="dashboard-title">Dashboard Admin</h1>
     <p class="dashboard-subtitle">Selamat datang di sistem Rental Kendaraan</p>
 </div>
 
-<!-- KPI Cards Grid -->
+
 <div class="kpi-grid">
     
-    <!-- Card 1: Total Kendaraan -->
+    
     <div class="kpi-card">
         <div class="kpi-icon kpi-icon-blue">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -25,7 +24,7 @@
         </div>
     </div>
 
-    <!-- Card 2: Kendaraan Tersedia -->
+    
     <div class="kpi-card">
         <div class="kpi-icon kpi-icon-green">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -38,7 +37,6 @@
         </div>
     </div>
 
-    <!-- Card 3: Kendaraan Disewa -->
     <div class="kpi-card">
         <div class="kpi-icon kpi-icon-orange">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -51,7 +49,6 @@
         </div>
     </div>
 
-    <!-- Card 4: Total User -->
     <div class="kpi-card">
         <div class="kpi-icon kpi-icon-purple">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -66,7 +63,7 @@
 
 </div>
 
-<!-- Transaksi Terbaru Section -->
+
 <div class="table-section">
     <div class="table-header">
         <h3 class="table-title">Transaksi Terbaru</h3>

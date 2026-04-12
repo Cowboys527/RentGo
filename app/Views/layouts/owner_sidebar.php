@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="<?= base_url('css/admin_sidebar.css') ?>">
     <link rel="preload" as="image" href="<?= base_url('img/logo.png') ?>">
 
-    <!-- ICON -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
 </head>
@@ -22,7 +21,6 @@
 
         <ul class="menu">
 
-            <!-- DASHBOARD -->
             <li>
                 <a href="<?= base_url('owner/dashboard') ?>">
                     <span class="material-icons">dashboard</span>
@@ -30,7 +28,6 @@
                 </a>
             </li>
 
-            <!-- LAPORAN -->
             <li>
                 <a href="<?= base_url('owner/laporan') ?>">
                     <span class="material-icons">bar_chart</span>
@@ -38,7 +35,6 @@
                 </a>
             </li>
 
-            <!-- LOG ACTIVITY -->
             <li>
                 <a href="<?= base_url('owner/log') ?>">
                     <span class="material-icons">history</span>

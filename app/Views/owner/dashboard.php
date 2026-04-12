@@ -3,13 +3,13 @@
 
 <link rel="stylesheet" href="<?= base_url('css/dashboard_owner.css') ?>">
 
-<!-- Header -->
+
 <div class="page-header">
     <h2 class="page-title">Dashboard Owner</h2>
     <p class="page-subtitle">Ringkasan Transaksi Hari Ini</p>
 </div>
 
-<!-- CARD KPI -->
+
 <div class="kpi-grid">
 
     <div class="kpi-card">
@@ -54,7 +54,6 @@
 
 </div>
 
-<!-- GRAFIK -->
 <div class="chart-section">
     <div class="chart-header">
         <h3 class="chart-title">Grafik Pendapatan 7 Hari</h3>
@@ -65,7 +64,6 @@
     </div>
 </div>
 
-<!-- CHART JS -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>

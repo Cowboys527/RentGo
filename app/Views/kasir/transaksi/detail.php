@@ -10,7 +10,6 @@
 
 <div class="detail-wrapper">
 
-    <!-- ================= DATA PELANGGAN ================= -->
     <div class="form-section">
         <div class="section-title">
             <div class="section-icon section-icon-blue">
@@ -75,7 +74,6 @@
    </div>
 
 
-    <!-- ================= DATA TRANSAKSI ================= -->
     <div class="form-section">
         <div class="section-title">
             <div class="section-icon section-icon-blue">
@@ -138,7 +136,6 @@
     </div>
 
 
-    <!-- ================= BAYAR ================= -->
     <?php if($t['status_bayar'] != 'Lunas'): ?>
 
     <div class="form-section">
@@ -178,7 +175,7 @@
 
     <?php endif; ?>
 
-    <!-- ================= BACK ================= -->
+    
     <div class="back-action">
         <a href="<?= base_url('kasir/transaksi') ?>">
             <button type="button" class="btn-back">Kembali</button>

@@ -17,7 +17,6 @@ class Owner extends BaseController
         }
     }
 
-    // ================= DASHBOARD =================
     public function dashboard()
     {
         if ($redirect = $this->checkLogin()) return $redirect;
@@ -28,7 +27,6 @@ class Owner extends BaseController
         $bulan = date('m');
         $tahun = date('Y');
 
-        // ================= PENDAPATAN =================
         $pendapatanHari = $transaksiModel
             ->where('tgl_sewa', $today)
             ->where('status_bayar', 'Lunas')
@@ -42,17 +40,16 @@ class Owner extends BaseController
             ->selectSum('total_bayar')
             ->first()['total_bayar'] ?? 0;
 
-        // ================= TOTAL TRANSAKSI =================
         $totalTransaksiHari = $transaksiModel
             ->where('tgl_sewa', $today)
             ->countAllResults();
 
-        // ================= KENDARAAN AKTIF =================
+       
         $kendaraanAktif = $transaksiModel
             ->where('status_sewa', 'Berlangsung')
             ->countAllResults();
 
-        // ================= GRAFIK =================
+        
         $grafik = [];
 
         for ($i = 6; $i >= 0; $i--) {
@@ -79,7 +76,7 @@ class Owner extends BaseController
         ]);
     }
 
-    // ================= LAPORAN =================
+    
    public function laporan()
 {
     if ($redirect = $this->checkLogin()) return $redirect;
@@ -116,14 +113,14 @@ class Owner extends BaseController
         return $builder;
     };
 
-    // ===== SUMMARY (semua data, tidak terpotong) =====
+    
     $allData = $applyFilter(new TransaksiModel())->findAll();
 
     $totalTransaksi  = count($allData);
     $totalPendapatan = array_sum(array_column($allData, 'total_bayar'));
     $kendaraanDisewa = count(array_unique(array_column($allData, 'id_kendaraan')));
 
-    // ===== TABEL (paginate) =====
+    
     $transaksiPaged = new TransaksiModel();
     $applyFilter($transaksiPaged);
     $transaksi = $transaksiPaged->paginate(10);
@@ -137,7 +134,7 @@ class Owner extends BaseController
     ]);
 }
 
-    // ================= LOG ACTIVITY =================
+    
     
 public function logActivity()
 {
