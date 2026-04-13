@@ -367,29 +367,22 @@ public function struk($id)
     $db = \Config\Database::connect();
 
     $transaksi = $db->table('transaksi t')
-        ->select('t.*, p.nama, k.nama_kendaraan')
+        ->select('t.*, p.nama, k.nama_kendaraan, u.nama as nama_kasir') 
         ->join('pelanggan p', 'p.id_pelanggan = t.id_pelanggan')
         ->join('kendaraan k', 'k.id_kendaraan = t.id_kendaraan')
+        ->join('users u', 'u.id_user = t.id_user') 
         ->where('t.id_transaksi', $id)
         ->get()
         ->getRowArray();
 
-    
     $html = view('kasir/transaksi/struk_pdf', [
         't' => $transaksi
     ]);
 
-    
     $dompdf = new \Dompdf\Dompdf();
-
     $dompdf->loadHtml($html);
-
-    
     $dompdf->setPaper([0, 0, 226.77, 600], 'portrait');
-
     $dompdf->render();
-
-    
     $dompdf->stream("struk_rental.pdf", ["Attachment" => false]);
 }
 

@@ -26,7 +26,8 @@ body {
 
 <div class="line"></div>
 
-Nama: <?= $t['nama'] ?><br>
+Kasir: <?= $t['nama_kasir'] ?><br>
+Nama Pel: <?= $t['nama'] ?><br>
 Kendaraan: <?= $t['nama_kendaraan'] ?><br>
 
 <div class="line"></div>
