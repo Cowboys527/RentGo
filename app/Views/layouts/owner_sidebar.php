@@ -29,6 +29,13 @@
             </li>
 
             <li>
+    <a href="<?= base_url('owner/kendaraan') ?>">
+        <span class="material-icons">directions_car</span>
+        Data Produk
+    </a>
+</li>
+
+            <li>
                 <a href="<?= base_url('owner/laporan') ?>">
                     <span class="material-icons">bar_chart</span>
                     Laporan Transaksi

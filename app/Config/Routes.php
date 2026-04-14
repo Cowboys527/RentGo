@@ -64,4 +64,5 @@ $routes->group('owner', function($routes){
     $routes->get('laporan', 'Owner::laporan');
     $routes->get('laporan/export', 'Owner::export');
     $routes->get('log', 'Owner::logActivity');
+    $routes->get('kendaraan', 'Owner::kendaraan');
 });

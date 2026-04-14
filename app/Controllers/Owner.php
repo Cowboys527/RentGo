@@ -209,4 +209,35 @@ public function logActivity()
     $dompdf->stream("laporan_transaksi.pdf", ["Attachment" => true]);
 }
 
+public function kendaraan()
+{
+    $model = new \App\Models\KendaraanModel();
+
+    $keyword = $this->request->getGet('keyword');
+    $jenis   = $this->request->getGet('jenis');
+    $status  = $this->request->getGet('status');
+
+    if ($keyword) {
+        $model->groupStart()
+              ->like('nama_kendaraan', $keyword)
+              ->orLike('plat_nomor', $keyword)
+              ->groupEnd();
+    }
+
+    if ($jenis) { $model->where('jenis', $jenis); }
+    if ($status) { $model->where('status', $status); }
+
+    $model->orderBy('id_kendaraan', 'DESC'); 
+
+    $data = [
+        'kendaraan' => $model->paginate(6),
+        'pager'     => $model->pager,
+        'keyword'   => $keyword,
+        'jenis'     => $jenis,
+        'status'    => $status
+    ];
+
+    return view('owner/kendaraan/index', $data);
+}
+
 }
